@@ -1,0 +1,1213 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>0526 物理小考訂正互動詳解</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fbfaf7;
+      --surface: #ffffff;
+      --ink: #18202c;
+      --muted: #687384;
+      --line: #d9dfdb;
+      --teal: #1c7b76;
+      --teal-soft: #dff1ee;
+      --red: #c95b4a;
+      --red-soft: #fae3dd;
+      --gold: #b7841c;
+      --gold-soft: #fbefd2;
+      --blue: #2d5f92;
+      --blue-soft: #dfebf5;
+      --shadow: 0 12px 30px rgba(24, 32, 44, .08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(223, 241, 238, .55), transparent 360px),
+        var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
+      gap: 24px;
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: grid;
+      gap: 4px;
+      padding: 4px 4px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand strong {
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .question-nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-link {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      padding: 8px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      text-decoration: none;
+      text-align: left;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: var(--teal-soft);
+      outline: none;
+    }
+
+    .nav-link.active {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .nav-link.active .nav-index {
+      background: #fff;
+      color: var(--teal);
+    }
+
+    .nav-index {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 800;
+      font-size: .82rem;
+    }
+
+    .nav-title {
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      line-height: 1.35;
+      font-size: .94rem;
+    }
+
+    .nav-meta {
+      justify-self: end;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .nav-link.active .nav-meta {
+      color: rgba(255, 255, 255, .82);
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      width: fit-content;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .8rem;
+      background: #fff;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .dot.online {
+      background: var(--teal);
+    }
+
+    main {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 18px;
+      min-height: 160px;
+      padding: 8px 0 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.25rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 68ch;
+    }
+
+    .hero-visual {
+      width: min(360px, 32vw);
+      min-width: 220px;
+      aspect-ratio: 1.8 / 1;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .tool-button,
+    .detail-toggle,
+    .comment-button,
+    .ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .tool-button:hover,
+    .detail-toggle:hover,
+    .comment-button:hover,
+    .ghost-button:hover {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .tool-button[aria-pressed="true"] {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .quiz-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+      gap: 18px;
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-card.is-hidden {
+      display: none;
+    }
+
+    .question-main {
+      min-width: 0;
+    }
+
+    .question-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .q-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0;
+    }
+
+    .question-text {
+      margin: 10px 0 12px;
+      font-size: 1.05rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 10px 0 0;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: .84rem;
+      background: var(--blue-soft);
+      color: #173853;
+    }
+
+    .chip.warn {
+      background: var(--red-soft);
+      color: #743025;
+    }
+
+    .answer-strip {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 12px;
+      border-left: 4px solid var(--teal);
+      background: var(--teal-soft);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .answer-strip strong {
+      font-size: 1.05rem;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .step {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .step-top {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--gold-soft);
+      color: #6a4707;
+      font-weight: 800;
+    }
+
+    .step-title {
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .step-body {
+      margin: 2px 0 0;
+      color: #263241;
+    }
+
+    .detail {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f5f7f7;
+      color: #334154;
+    }
+
+    .step.open .detail {
+      display: block;
+    }
+
+    .step-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-left: 44px;
+    }
+
+    .formula {
+      display: inline-block;
+      padding: 0 3px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    .frac {
+      display: inline-grid;
+      grid-template-rows: auto auto;
+      align-items: center;
+      justify-items: center;
+      margin: 0 .12em;
+      vertical-align: middle;
+      line-height: 1.05;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .frac > span:first-child {
+      border-bottom: 1px solid currentColor;
+      padding: 0 .18em .06em;
+    }
+
+    .frac > span:last-child {
+      padding: .06em .18em 0;
+    }
+
+    .side-panel {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      min-width: 0;
+    }
+
+    .mini-panel {
+      display: grid;
+      gap: 9px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfb;
+    }
+
+    .mini-panel h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .mini-panel ul {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding-left: 1.25em;
+      color: #334154;
+    }
+
+    .diagram {
+      overflow: hidden;
+      border-radius: 8px;
+      background: #f1f5f2;
+      border: 1px solid var(--line);
+      min-height: 160px;
+    }
+
+    .diagram svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .comments {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .comments h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .comment-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .comment {
+      display: grid;
+      gap: 3px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f6f8f8;
+      border: 1px solid #e5e9e6;
+    }
+
+    .comment-meta {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .comment-form {
+      display: grid;
+      grid-template-columns: minmax(110px, 180px) minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 10px;
+    }
+
+    .comment-form textarea {
+      min-height: 38px;
+      resize: vertical;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .question-nav {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .nav-link {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .nav-title {
+        display: none;
+      }
+
+      .nav-meta {
+        display: none;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        width: min(100%, 460px);
+      }
+
+      .quiz-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .app-shell {
+        width: min(100% - 20px, 1280px);
+        padding-top: 10px;
+      }
+
+      .question-nav {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .toolbar {
+        position: sticky;
+        top: 8px;
+        z-index: 3;
+      }
+
+      .quiz-card {
+        padding: 12px;
+      }
+
+      .question-text {
+        font-size: 1rem;
+      }
+
+      .step-actions {
+        padding-left: 0;
+      }
+
+      .comment-form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="題目導覽">
+      <div class="brand">
+        <strong>0526 物理小考訂正</strong>
+        <span>力學二與熱學｜4-2 到 4-4</span>
+      </div>
+      <nav id="questionNav" class="question-nav"></nav>
+      <div id="syncStatus" class="sync-pill"><span class="dot"></span><span>本機留言</span></div>
+    </aside>
+
+    <main>
+      <section class="topbar" aria-labelledby="pageTitle">
+        <div>
+          <h1 id="pageTitle">分步詳解</h1>
+          <p class="subtitle">每一步都可展開；卡住時可把問題留在該題下方，方便同學一起補洞。</p>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 540 300" role="img">
+            <rect x="20" y="34" width="500" height="226" rx="8" fill="#fff" stroke="#d9dfdb"/>
+            <text x="66" y="88" fill="#18202c" font-family="Georgia, serif" font-size="38">E = K + U</text>
+            <rect x="72" y="130" width="390" height="38" fill="none" stroke="#18202c" stroke-width="3"/>
+            <rect x="72" y="130" width="178" height="38" fill="#eaf3f2" stroke="#18202c" stroke-width="3"/>
+            <line x1="250" y1="130" x2="250" y2="168" stroke="#18202c" stroke-width="3"/>
+            <text x="142" y="156" fill="#18202c" font-size="20">K</text>
+            <text x="346" y="156" fill="#18202c" font-size="20">U</text>
+            <line x1="72" y1="196" x2="462" y2="196" stroke="#687384" stroke-width="2"/>
+            <line x1="72" y1="186" x2="72" y2="206" stroke="#687384" stroke-width="2"/>
+            <line x1="462" y1="186" x2="462" y2="206" stroke="#687384" stroke-width="2"/>
+            <text x="190" y="232" fill="#687384" font-size="20">總力學能</text>
+          </svg>
+        </div>
+      </section>
+
+      <div class="toolbar" aria-label="詳解控制">
+        <button class="tool-button" id="showAllQuestions" type="button" aria-pressed="false">▦ 顯示全部</button>
+        <button class="tool-button" id="expandAll" type="button">＋ 全部展開</button>
+        <button class="tool-button" id="collapseAll" type="button">－ 全部收合</button>
+        <button class="tool-button" id="toggleWarnings" type="button" aria-pressed="true">！易錯提醒</button>
+      </div>
+
+      <section id="quizList" aria-label="題目與詳解"></section>
+    </main>
+  </div>
+
+  <template id="commentTemplate">
+    <article class="comment">
+      <div class="comment-meta"></div>
+      <div class="comment-text"></div>
+    </article>
+  </template>
+
+  <script>
+    const COMMENT_BACKEND = {
+      supabaseUrl: "https://ovaachkrrnlsjscphdtz.supabase.co",
+      supabaseAnonKey: "sb_publishable_2n8khQ8IMMXRLrQIlDOdOg_rHb0ES82",
+      table: "quiz_comments"
+    };
+
+    const quiz = [
+      {
+        id: "q1",
+        nav: "彈簧位能",
+        title: "彈簧壓縮後的位能",
+        question: "一質量為 m 之物體固定在一理想彈簧的右端，靜置在水平面上，彈簧的左端固定。向右拉動物體，使彈簧較原長伸長 x 時，彈簧位能為 Us。放手後物體往左通過平衡點，當彈簧較原長壓縮 x/3 時，彈簧位能為何？",
+        answer: "Us / 9",
+        concepts: ["彈力位能", "位移平方關係", "伸長與壓縮同樣看 |x|"],
+        pitfalls: ["把 x/3 直接變成 Us/3", "忘記位能公式中位移要平方", "把壓縮方向當成負位能"],
+        diagram: "spring",
+        steps: [
+          {
+            title: "先把 Us 寫成公式",
+            body: "<span class='formula'>Us = <span class='frac'><span>1</span><span>2</span></span> kx<sup>2</sup></span>",
+            detail: "理想彈簧的彈力位能只和彈簧相對原長的變形量有關。這裡 x 是原本被拉長的量，所以題目給的 Us 可以直接當成 <span class='formula'><span class='frac'><span>1</span><span>2</span></span>kx<sup>2</sup></span>。"
+          },
+          {
+            title: "壓縮時仍然用變形量大小",
+            body: "壓縮 <span class='formula'>x/3</span> 時，變形量大小是 <span class='formula'>x/3</span>。",
+            detail: "彈簧被壓縮時若用座標可能是負值，但位能公式裡是平方，所以 <span class='formula'>(-x/3)<sup>2</sup></span> 和 <span class='formula'>(x/3)<sup>2</sup></span> 相同。"
+          },
+          {
+            title: "代入並和 Us 比較",
+            body: "<span class='formula'>U = <span class='frac'><span>1</span><span>2</span></span>k(<span class='frac'><span>x</span><span>3</span></span>)<sup>2</sup> = <span class='frac'><span>1</span><span>9</span></span>Us</span>",
+            detail: "只要變形量變成原來的 1/3，位能就變成 <span class='formula'>(1/3)<sup>2</sup> = 1/9</span> 倍。"
+          }
+        ]
+      },
+      {
+        id: "q2",
+        nav: "簡諧運動之力學能守恆",
+        title: "位移為 4/5 振幅時的動能百分比",
+        question: "一物體與彈簧連接作水平方向簡諧運動。在振盪期間，當位移的量值為振幅的 4/5 時，動能占總力學能的多少百分比？(A) 25% (B) 36% (C) 50% (D) 64% (E) 75%",
+        answer: "36%，選 (B)",
+        concepts: ["簡諧運動", "總能量守恆", "U/E = x²/A²"],
+        pitfalls: ["把位能百分比 64% 當成答案", "把 4/5 直接拿去算動能", "忘記總能量用振幅 A"],
+        diagram: "oscillation",
+        steps: [
+          {
+            title: "總力學能看最大位移",
+            body: "<span class='formula'>E = <span class='frac'><span>1</span><span>2</span></span>kA<sup>2</sup></span>",
+            detail: "簡諧運動到振幅 A 的端點時速度為 0，能量全是彈性位能，所以總能量可用振幅寫成 <span class='formula'><span class='frac'><span>1</span><span>2</span></span>kA<sup>2</sup></span>。"
+          },
+          {
+            title: "位移 4A/5 時先算位能比例",
+            body: "<span class='formula'><span class='frac'><span>U</span><span>E</span></span> = <span class='frac'><span>(4A/5)<sup>2</sup></span><span>A<sup>2</sup></span></span> = <span class='frac'><span>16</span><span>25</span></span> = 64%</span>",
+            detail: "彈簧位能和位移平方成正比；A 會約掉，所以只剩下 <span class='formula'>(4/5)<sup>2</sup></span>。"
+          },
+          {
+            title: "動能是剩下的部分",
+            body: "<span class='formula'><span class='frac'><span>K</span><span>E</span></span> = 1 - 64% = 36%</span>",
+            detail: "水平面上的彈簧振子沒有重力位能變化，總能量只在 K 和 U 之間轉換。位能占 64%，動能就占 36%。"
+          }
+        ]
+      },
+      {
+        id: "q3",
+        nav: "軌道上位能與力學能",
+        title: "行星從近日點到遠日點",
+        question: "一質量為 m 的行星在橢圓軌道上繞質量為 M 的太陽運動。行星與太陽最近距離為 R，最遠距離為 2R。設無窮遠處重力位能為 0，重力常數為 G。求：(1) 由近日點移至遠日點，重力對行星所作的功；(2) 行星繞太陽系統的力學能。",
+        answer: "(1) −GMm/(2R)；(2) −GMm/(3R)",
+        concepts: ["萬有引力位能", "保守力作功", "克卜勒第二定律", "力學能守恆"],
+        pitfalls: ["把 ΔU 當作重力作功", "忘記重力位能是負值", "在近日點與遠日點沒有用 r v 關係"],
+        diagram: "orbit",
+        steps: [
+          {
+            title: "寫出兩端重力位能",
+            body: "<span class='formula'>U<sub>近</sub> = -<span class='frac'><span>GMm</span><span>R</span></span>，U<sub>遠</sub> = -<span class='frac'><span>GMm</span><span>2R</span></span></span>",
+            detail: "萬有引力位能以無窮遠為 0，因此有限距離的位能是負值。離太陽越遠，位能越接近 0。"
+          },
+          {
+            title: "重力作功等於負的位能變化",
+            body: "<span class='formula'>W<sub>g</sub> = -ΔU = -(U<sub>遠</sub> - U<sub>近</sub>) = -<span class='frac'><span>GMm</span><span>2R</span></span></span>",
+            detail: "從 R 到 2R 是遠離太陽，重力方向和位移大致相反，所以重力作功應該是負值。這個物理判斷可以檢查符號。"
+          },
+          {
+            title: "用克卜勒第二定律連接兩端速率",
+            body: "<span class='formula'>R v<sub>近</sub> = 2R v<sub>遠</sub>，所以 v<sub>近</sub> = 2v<sub>遠</sub></span>",
+            detail: "近日點與遠日點的速度都垂直於太陽到行星的連線，因此角動量守恆可直接寫成 <span class='formula'>mrv</span> 相等。半徑變 2 倍，速率變 1/2。"
+          },
+          {
+            title: "把動能設成同一個未知數",
+            body: "令 <span class='formula'>K<sub>遠</sub> = K</span>，則 <span class='formula'>K<sub>近</sub> = 4K</span>。",
+            detail: "動能和速度平方成正比。近日點速率是遠日點的 2 倍，因此近日點動能是遠日點的 4 倍。"
+          },
+          {
+            title: "套力學能守恆求 K",
+            body: "<span class='formula'>-<span class='frac'><span>GMm</span><span>R</span></span> + 4K = -<span class='frac'><span>GMm</span><span>2R</span></span> + K</span>，得 <span class='formula'>K = <span class='frac'><span>GMm</span><span>6R</span></span></span>",
+            detail: "萬有引力是保守力，沒有非保守力作功時，近日點與遠日點總力學能相同。"
+          },
+          {
+            title: "回代得到軌道總能量",
+            body: "<span class='formula'>E = U<sub>遠</sub> + K<sub>遠</sub> = -<span class='frac'><span>GMm</span><span>2R</span></span> + <span class='frac'><span>GMm</span><span>6R</span></span> = -<span class='frac'><span>GMm</span><span>3R</span></span></span>",
+            detail: "答案為負值，代表行星是束縛在太陽附近的橢圓軌道；若總能量不為負，軌道就不是封閉橢圓。"
+          }
+        ]
+      },
+      {
+        id: "q4",
+        nav: "重力位能一般式",
+        title: "砲彈改用 v0/3 後的最大高度",
+        question: "欲將一砲彈自地面鉛直向上發射，使其達最大高度、距地面為 R 處，所需初速度為 v0。今若改以 v0/3 的初速鉛直向上發射，則其可達的最大高度為何？R 為地球半徑。",
+        answer: "距地面 R/17",
+        concepts: ["萬有引力位能", "能量守恆", "最大高度速度為 0", "地心距離與離地高度"],
+        pitfalls: ["把重力位能寫成 mgh", "把高度 R 誤當地心距離 R", "最後忘記扣掉地球半徑"],
+        diagram: "projectile",
+        steps: [
+          {
+            title: "先用原條件求 v0 的能量意義",
+            body: "地面地心距離是 <span class='formula'>R</span>，離地高度 <span class='formula'>R</span> 的最高點地心距離是 <span class='formula'>2R</span>。",
+            detail: "萬有引力位能要用地心距離 r，不是離地高度 h。題目說最高點距地面為 R，所以那一點離地心是 <span class='formula'>R + R = 2R</span>。"
+          },
+          {
+            title: "原本剛好到 2R，最高點速度為 0",
+            body: "<span class='formula'>-<span class='frac'><span>GMm</span><span>R</span></span> + <span class='frac'><span>1</span><span>2</span></span>mv<sub>0</sub><sup>2</sup> = -<span class='frac'><span>GMm</span><span>2R</span></span></span>",
+            detail: "最高點瞬間速度為 0，所以右邊只有重力位能。這一步的目的不是直接求高度，而是把 <span class='formula'>v<sub>0</sub></span> 和 <span class='formula'>GM/R</span> 連起來。"
+          },
+          {
+            title: "整理得到初速動能",
+            body: "<span class='formula'><span class='frac'><span>1</span><span>2</span></span>mv<sub>0</sub><sup>2</sup> = <span class='frac'><span>GMm</span><span>2R</span></span></span>",
+            detail: "這表示原本的初速提供的動能，剛好等於從地心距離 R 到 2R 所需增加的重力位能。"
+          },
+          {
+            title: "速度改成 v0/3，動能變成 1/9",
+            body: "<span class='formula'><span class='frac'><span>1</span><span>2</span></span>m(<span class='frac'><span>v<sub>0</sub></span><span>3</span></span>)<sup>2</sup> = <span class='frac'><span>1</span><span>9</span></span> · <span class='frac'><span>GMm</span><span>2R</span></span> = <span class='frac'><span>GMm</span><span>18R</span></span></span>",
+            detail: "速率除以 3，動能不是除以 3，而是除以 9。這是本題最容易失分的位置。"
+          },
+          {
+            title: "設新的最高點地心距離為 r",
+            body: "<span class='formula'>-<span class='frac'><span>GMm</span><span>R</span></span> + <span class='frac'><span>GMm</span><span>18R</span></span> = -<span class='frac'><span>GMm</span><span>r</span></span></span>",
+            detail: "新的最高點速度一樣為 0，所以最後只剩位能。左邊是發射瞬間的總機械能。"
+          },
+          {
+            title: "求出 r 再換成離地高度",
+            body: "<span class='formula'>-<span class='frac'><span>17GMm</span><span>18R</span></span> = -<span class='frac'><span>GMm</span><span>r</span></span></span>，所以 <span class='formula'>r = <span class='frac'><span>18R</span><span>17</span></span></span>，高度 <span class='formula'>h = r - R = <span class='frac'><span>R</span><span>17</span></span></span>",
+            detail: "r 是離地心距離，不是答案。題目問距地面的最大高度，因此要再減掉地球半徑 R。"
+          }
+        ]
+      },
+      {
+        id: "q5",
+        nav: "非保守力",
+        title: "非保守力作功與力學能變化",
+        question: "一系統中，若有非保守力作功 −10 焦耳，則此系統力學能變化為多少焦耳？",
+        answer: "−10 J",
+        concepts: ["非保守力作功", "力學能變化", "ΔE = Wnc"],
+        pitfalls: ["把作功的負號拿掉", "誤以為力學能守恆", "把系統能量和熱散失方向混在一起"],
+        diagram: "work",
+        steps: [
+          {
+            title: "認出非保守力作功公式",
+            body: "<span class='formula'>ΔE<sub>mech</sub> = W<sub>nc</sub></span>",
+            detail: "保守力只在動能與位能之間轉換，不改變總機械能；非保守力作功才會讓機械能增加或減少。"
+          },
+          {
+            title: "直接代入題目數值",
+            body: "<span class='formula'>ΔE<sub>mech</sub> = -10 J</span>",
+            detail: "負作功表示機械能減少，例如摩擦力常會把機械能轉成熱能。"
+          }
+        ]
+      }
+    ];
+
+    const diagrams = {
+      spring: `
+        <svg viewBox="0 0 360 190" aria-label="彈簧伸長與壓縮示意">
+          <rect width="360" height="190" fill="#fff"/>
+          <line x1="36" y1="132" x2="326" y2="132" stroke="#687384" stroke-width="2"/>
+          <rect x="38" y="62" width="16" height="70" fill="#18202c"/>
+          <path d="M54 97 L64 97 C68 79 80 79 84 97 C88 115 100 115 104 97 C108 79 120 79 124 97 C128 115 140 115 144 97 L154 97" fill="none" stroke="#18202c" stroke-width="4"/>
+          <rect x="154" y="75" width="48" height="44" fill="#eaf3f2" stroke="#18202c" stroke-width="3"/>
+          <line x1="202" y1="49" x2="202" y2="142" stroke="#c95b4a" stroke-width="2" stroke-dasharray="5 5"/>
+          <line x1="226" y1="42" x2="226" y2="142" stroke="#18202c" stroke-width="2" stroke-dasharray="5 5"/>
+          <line x1="296" y1="49" x2="296" y2="142" stroke="#2d5f92" stroke-width="2" stroke-dasharray="5 5"/>
+          <rect x="296" y="75" width="42" height="44" fill="none" stroke="#2d5f92" stroke-width="2" stroke-dasharray="6 5"/>
+          <text x="168" y="157" fill="#c95b4a" font-size="15">壓縮 x/3</text>
+          <text x="198" y="36" fill="#18202c" font-size="15">平衡點(原長)</text>
+          <text x="280" y="157" fill="#2d5f92" font-size="15">伸長 x</text>
+          <line x1="202" y1="166" x2="226" y2="166" stroke="#c95b4a" stroke-width="3"/>
+          <polygon points="202,166 214,159 214,173" fill="#c95b4a"/>
+          <line x1="226" y1="24" x2="296" y2="24" stroke="#2d5f92" stroke-width="3"/>
+          <polygon points="296,24 284,17 284,31" fill="#2d5f92"/>
+        </svg>`,
+      oscillation: `
+        <svg viewBox="0 0 360 190" aria-label="簡諧運動能量示意">
+          <rect width="360" height="190" fill="#fff"/>
+          <line x1="42" y1="112" x2="320" y2="112" stroke="#687384" stroke-width="2"/>
+          <line x1="78" y1="96" x2="78" y2="128" stroke="#18202c" stroke-width="3"/>
+          <line x1="180" y1="88" x2="180" y2="136" stroke="#687384" stroke-width="2" stroke-dasharray="5 5"/>
+          <line x1="262" y1="96" x2="262" y2="128" stroke="#c95b4a" stroke-width="3"/>
+          <line x1="282" y1="96" x2="282" y2="128" stroke="#18202c" stroke-width="3"/>
+          <circle cx="262" cy="112" r="11" fill="#c95b4a"/>
+          <line x1="180" y1="150" x2="262" y2="150" stroke="#c95b4a" stroke-width="3"/>
+          <polygon points="262,150 250,143 250,157" fill="#c95b4a"/>
+          <text x="70" y="150" fill="#18202c" font-size="16">−A</text>
+          <text x="174" y="82" fill="#687384" font-size="16">O</text>
+          <text x="274" y="150" fill="#18202c" font-size="16">A</text>
+          <text x="210" y="66" fill="#c95b4a" font-size="18">|x| = 4A/5</text>
+          <text x="194" y="174" fill="#c95b4a" font-size="15">位移量值</text>
+        </svg>`,
+      orbit: `
+        <svg viewBox="0 0 360 220" aria-label="橢圓軌道近日點與遠日點">
+          <rect width="360" height="220" fill="#f7faf8"/>
+          <ellipse cx="186" cy="110" rx="128" ry="70" fill="none" stroke="#1c7b76" stroke-width="5"/>
+          <circle cx="118" cy="110" r="15" fill="#b7841c"/>
+          <circle cx="58" cy="110" r="10" fill="#2d5f92"/>
+          <circle cx="314" cy="110" r="10" fill="#c95b4a"/>
+          <line x1="118" y1="110" x2="58" y2="110" stroke="#2d5f92" stroke-width="3"/>
+          <line x1="118" y1="110" x2="314" y2="110" stroke="#c95b4a" stroke-width="3"/>
+          <text x="70" y="96" fill="#2d5f92" font-size="16">R</text>
+          <text x="206" y="96" fill="#c95b4a" font-size="16">2R</text>
+          <text x="133" y="116" fill="#7b5411" font-size="17">M</text>
+        </svg>`,
+      projectile: `
+        <svg viewBox="0 0 360 220" aria-label="砲彈離地高度示意">
+          <rect width="360" height="220" fill="#f7faf8"/>
+          <circle cx="180" cy="226" r="106" fill="#dfebf5" stroke="#2d5f92" stroke-width="4"/>
+          <line x1="180" y1="226" x2="180" y2="120" stroke="#334154" stroke-width="3"/>
+          <path d="M180 120 C178 88 178 60 180 28" fill="none" stroke="#c95b4a" stroke-width="5" stroke-linecap="round"/>
+          <polygon points="180,22 170,44 190,44" fill="#c95b4a"/>
+          <line x1="206" y1="120" x2="206" y2="28" stroke="#b7841c" stroke-width="3" stroke-dasharray="6 5"/>
+          <text x="152" y="178" fill="#18202c" font-size="17">R</text>
+          <text x="218" y="78" fill="#b7841c" font-size="17">h?</text>
+          <text x="197" y="36" fill="#c95b4a" font-size="17">v₀/3</text>
+        </svg>`,
+      work: `
+        <svg viewBox="0 0 360 180" aria-label="非保守力作功示意">
+          <rect width="360" height="180" fill="#f7faf8"/>
+          <rect x="74" y="82" width="82" height="46" rx="8" fill="#dfebf5" stroke="#2d5f92" stroke-width="3"/>
+          <line x1="156" y1="105" x2="252" y2="105" stroke="#1c7b76" stroke-width="5" stroke-linecap="round"/>
+          <polygon points="262,105 242,93 242,117" fill="#1c7b76"/>
+          <line x1="74" y1="139" x2="295" y2="139" stroke="#97a39b" stroke-width="3"/>
+          <path d="M90 142 C108 158 128 158 146 142 S184 126 204 142" fill="none" stroke="#c95b4a" stroke-width="4"/>
+          <text x="82" y="54" fill="#18202c" font-size="20">Wnc = ΔE</text>
+        </svg>`
+    };
+
+    const hasSupabase = Boolean(COMMENT_BACKEND.supabaseUrl && COMMENT_BACKEND.supabaseAnonKey);
+    const storageKey = "datong-0526-comments-v1";
+    let comments = [];
+    let activeQuestionId = "q1";
+    let showAllQuestions = false;
+
+    const nav = document.querySelector("#questionNav");
+    const quizList = document.querySelector("#quizList");
+    const syncStatus = document.querySelector("#syncStatus");
+
+    function render() {
+      nav.innerHTML = quiz.map((item, index) => `
+        <button class="nav-link" type="button" data-question-id="${item.id}" aria-pressed="${item.id === activeQuestionId}">
+          <span class="nav-index">${index + 1}</span>
+          <span class="nav-title">${escapeHtml(item.nav)}</span>
+          <span class="nav-meta" data-comment-count="${item.id}"></span>
+        </button>
+      `).join("");
+
+      quizList.innerHTML = quiz.map((item, index) => questionCard(item, index)).join("");
+      bindStepControls();
+      bindForms();
+      bindQuestionNav();
+      setQuestionView(activeQuestionId, false);
+      renderAllComments();
+    }
+
+    function questionCard(item, index) {
+      return `
+        <article class="quiz-card" id="${item.id}">
+          <div class="question-main">
+            <header class="question-header">
+              <span class="q-badge">${index + 1}</span>
+              <h2>${escapeHtml(item.title)}</h2>
+            </header>
+            <p class="question-text">${escapeHtml(item.question)}</p>
+            <div class="chips" aria-label="使用概念">
+              ${item.concepts.map(concept => `<span class="chip">${escapeHtml(concept)}</span>`).join("")}
+            </div>
+            <div class="answer-strip">
+              <span>答案</span>
+              <strong>${item.answer}</strong>
+            </div>
+            <div class="steps">
+              ${item.steps.map((step, stepIndex) => stepCard(item.id, step, stepIndex)).join("")}
+            </div>
+          </div>
+          <aside class="side-panel">
+            <div class="diagram">${diagrams[item.diagram]}</div>
+            <section class="mini-panel warning-panel">
+              <h3>容易寫錯</h3>
+              <ul>
+                ${item.pitfalls.map(pitfall => `<li>${escapeHtml(pitfall)}</li>`).join("")}
+              </ul>
+            </section>
+          </aside>
+          <section class="comments" data-question-id="${item.id}">
+            <h3>同學提問</h3>
+            <div class="comment-list" data-comment-list="${item.id}"></div>
+            <form class="comment-form" data-form="${item.id}">
+              <input name="name" maxlength="18" placeholder="姓名或座號" autocomplete="name">
+              <textarea name="message" maxlength="500" placeholder="留下你卡住的地方" required></textarea>
+              <button class="comment-button" type="submit">送出</button>
+            </form>
+          </section>
+        </article>
+      `;
+    }
+
+    function stepCard(questionId, step, stepIndex) {
+      const stepId = `${questionId}-s${stepIndex + 1}`;
+      return `
+        <section class="step" data-step-id="${stepId}">
+          <div class="step-top">
+            <span class="step-number">${stepIndex + 1}</span>
+            <div>
+              <p class="step-title">${escapeHtml(step.title)}</p>
+              <p class="step-body">${step.body}</p>
+            </div>
+          </div>
+          <div class="detail">${step.detail}</div>
+          <div class="step-actions">
+            <button class="detail-toggle" type="button" aria-expanded="false">詳解</button>
+            <button class="ghost-button ask-step" type="button" data-question-id="${questionId}" data-step-label="第 ${stepIndex + 1} 步：${escapeHtml(step.title)}">我卡在這步</button>
+          </div>
+        </section>
+      `;
+    }
+
+    function bindStepControls() {
+      document.querySelectorAll(".detail-toggle").forEach(button => {
+        button.addEventListener("click", () => {
+          const step = button.closest(".step");
+          const isOpen = step.classList.toggle("open");
+          button.setAttribute("aria-expanded", String(isOpen));
+          button.textContent = isOpen ? "收合" : "詳解";
+        });
+      });
+
+      document.querySelectorAll(".ask-step").forEach(button => {
+        button.addEventListener("click", () => {
+          const form = document.querySelector(`[data-form="${button.dataset.questionId}"]`);
+          const textarea = form.querySelector("textarea");
+          textarea.value = `${button.dataset.stepLabel}：`;
+          textarea.focus();
+        });
+      });
+    }
+
+    function bindForms() {
+      document.querySelectorAll(".comment-form").forEach(form => {
+        form.addEventListener("submit", async event => {
+          event.preventDefault();
+          const questionId = form.dataset.form;
+          const formData = new FormData(form);
+          const payload = {
+            question_id: questionId,
+            step_id: "",
+            name: String(formData.get("name") || "同學").trim().slice(0, 18) || "同學",
+            message: String(formData.get("message") || "").trim().slice(0, 500),
+            created_at: new Date().toISOString()
+          };
+          if (!payload.message) return;
+          await addComment(payload);
+          form.reset();
+          renderComments(questionId);
+        });
+      });
+    }
+
+    function bindQuestionNav() {
+      document.querySelectorAll(".nav-link").forEach(button => {
+        button.addEventListener("click", () => {
+          showAllQuestions = false;
+          setQuestionView(button.dataset.questionId, true);
+        });
+      });
+    }
+
+    function setQuestionView(questionId, shouldScroll) {
+      activeQuestionId = questionId;
+      document.querySelector("#showAllQuestions").setAttribute("aria-pressed", String(showAllQuestions));
+      document.querySelectorAll(".quiz-card").forEach(card => {
+        card.classList.toggle("is-hidden", !showAllQuestions && card.id !== activeQuestionId);
+      });
+      document.querySelectorAll(".nav-link").forEach(button => {
+        const isActive = !showAllQuestions && button.dataset.questionId === activeQuestionId;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      if (shouldScroll) {
+        document.querySelector("#quizList").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    async function loadComments() {
+      if (hasSupabase) {
+        try {
+          const response = await fetch(`${COMMENT_BACKEND.supabaseUrl}/rest/v1/${COMMENT_BACKEND.table}?select=*&order=created_at.asc`, {
+            headers: {
+              apikey: COMMENT_BACKEND.supabaseAnonKey,
+              Authorization: `Bearer ${COMMENT_BACKEND.supabaseAnonKey}`
+            }
+          });
+          if (!response.ok) throw new Error("comment fetch failed");
+          comments = await response.json();
+          updateSync(true);
+          return;
+        } catch (error) {
+          console.warn(error);
+        }
+      }
+
+      comments = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      updateSync(false);
+    }
+
+    async function addComment(payload) {
+      if (hasSupabase) {
+        try {
+          const response = await fetch(`${COMMENT_BACKEND.supabaseUrl}/rest/v1/${COMMENT_BACKEND.table}`, {
+            method: "POST",
+            headers: {
+              apikey: COMMENT_BACKEND.supabaseAnonKey,
+              Authorization: `Bearer ${COMMENT_BACKEND.supabaseAnonKey}`,
+              "Content-Type": "application/json",
+              Prefer: "return=representation"
+            },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) throw new Error("comment insert failed");
+          const inserted = await response.json();
+          comments.push(inserted[0] || payload);
+          return;
+        } catch (error) {
+          console.warn(error);
+        }
+      }
+
+      comments.push({ ...payload, id: crypto.randomUUID() });
+      localStorage.setItem(storageKey, JSON.stringify(comments));
+    }
+
+    function renderAllComments() {
+      quiz.forEach(item => renderComments(item.id));
+      updateCommentCounts();
+    }
+
+    function renderComments(questionId) {
+      const list = document.querySelector(`[data-comment-list="${questionId}"]`);
+      const filtered = comments.filter(comment => comment.question_id === questionId);
+      if (!filtered.length) {
+        list.innerHTML = `<p class="empty">目前還沒有提問。</p>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      const template = document.querySelector("#commentTemplate");
+      filtered.forEach(comment => {
+        const node = template.content.cloneNode(true);
+        node.querySelector(".comment-meta").textContent = `${comment.name || "同學"} · ${formatDate(comment.created_at)}`;
+        node.querySelector(".comment-text").textContent = comment.message;
+        list.appendChild(node);
+      });
+      updateCommentCounts();
+    }
+
+    function updateCommentCounts() {
+      quiz.forEach(item => {
+        const count = comments.filter(comment => comment.question_id === item.id).length;
+        const label = document.querySelector(`[data-comment-count="${item.id}"]`);
+        if (label) label.textContent = count ? `${count} 則` : "";
+      });
+    }
+
+    function updateSync(online) {
+      const dot = syncStatus.querySelector(".dot");
+      dot.classList.toggle("online", online);
+      syncStatus.querySelector("span:last-child").textContent = online ? "共享留言" : "本機留言";
+    }
+
+    function formatDate(value) {
+      try {
+        return new Intl.DateTimeFormat("zh-TW", {
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(new Date(value));
+      } catch {
+        return "";
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.querySelector("#expandAll").addEventListener("click", () => {
+      document.querySelectorAll(".step").forEach(step => step.classList.add("open"));
+      document.querySelectorAll(".detail-toggle").forEach(button => {
+        button.setAttribute("aria-expanded", "true");
+        button.textContent = "收合";
+      });
+    });
+
+    document.querySelector("#collapseAll").addEventListener("click", () => {
+      document.querySelectorAll(".step").forEach(step => step.classList.remove("open"));
+      document.querySelectorAll(".detail-toggle").forEach(button => {
+        button.setAttribute("aria-expanded", "false");
+        button.textContent = "詳解";
+      });
+    });
+
+    document.querySelector("#toggleWarnings").addEventListener("click", event => {
+      const pressed = event.currentTarget.getAttribute("aria-pressed") === "true";
+      event.currentTarget.setAttribute("aria-pressed", String(!pressed));
+      document.querySelectorAll(".warning-panel").forEach(panel => panel.classList.toggle("hidden", pressed));
+    });
+
+    document.querySelector("#showAllQuestions").addEventListener("click", event => {
+      showAllQuestions = event.currentTarget.getAttribute("aria-pressed") !== "true";
+      setQuestionView(activeQuestionId, false);
+    });
+
+    render();
+    loadComments().then(renderAllComments);
+  </script>
+</body>
+</html>

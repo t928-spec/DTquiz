@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>0604 物理小考訂正互動詳解</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f8f6f1;
+      --surface: #ffffff;
+      --ink: #17212f;
+      --muted: #647084;
+      --line: #d8ddd7;
+      --teal: #14736d;
+      --teal-soft: #dff0ec;
+      --red: #b94f43;
+      --red-soft: #fae3dd;
+      --gold: #9e751c;
+      --gold-soft: #f7ebce;
+      --blue: #315f8b;
+      --blue-soft: #dfeaf4;
+      --green: #42725a;
+      --shadow: 0 14px 32px rgba(23, 33, 47, .09);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(223, 240, 236, .78), transparent 350px),
+        linear-gradient(90deg, rgba(247, 235, 206, .42), transparent 48%),
+        var(--paper);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    button,
+    input,
+    textarea { font: inherit; }
+
+    button { cursor: pointer; }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: minmax(210px, 262px) minmax(0, 1fr);
+      gap: 24px;
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: grid;
+      gap: 4px;
+      padding: 4px 4px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand strong {
+      font-size: 1.06rem;
+      line-height: 1.25;
+    }
+
+    .brand span,
+    .muted {
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .question-nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-link {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      padding: 8px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: var(--teal-soft);
+      outline: none;
+    }
+
+    .nav-link.active {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .nav-index {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 800;
+      font-size: .82rem;
+    }
+
+    .nav-link.active .nav-index {
+      background: #fff;
+      color: var(--teal);
+    }
+
+    .nav-title {
+      overflow-wrap: anywhere;
+      line-height: 1.35;
+      font-size: .94rem;
+    }
+
+    .nav-meta {
+      justify-self: end;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .nav-link.active .nav-meta {
+      color: rgba(255, 255, 255, .84);
+    }
+
+    .sync-pill,
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      width: fit-content;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .8rem;
+      background: #fff;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .dot.online { background: var(--teal); }
+
+    main {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 360px);
+      align-items: end;
+      gap: 18px;
+      min-height: 164px;
+      padding: 8px 0 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 70ch;
+    }
+
+    .snapshot {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .snapshot img {
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      object-position: 50% 48%;
+      filter: saturate(.98) contrast(1.02);
+    }
+
+    .snapshot a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: .9rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .tool-button,
+    .detail-toggle,
+    .comment-button,
+    .ghost-button,
+    .choice-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .tool-button:hover,
+    .detail-toggle:hover,
+    .comment-button:hover,
+    .ghost-button:hover,
+    .choice-button:hover {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .tool-button[aria-pressed="true"],
+    .choice-button.selected {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .quiz-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
+      gap: 18px;
+      padding: 18px;
+      background: rgba(255, 255, 255, .9);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-card.is-hidden { display: none; }
+
+    .question-main { min-width: 0; }
+
+    .question-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .q-badge,
+    .step-number {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.28rem, 2.3vw, 1.7rem);
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .question-text {
+      margin: 10px 0 12px;
+      font-size: 1.04rem;
+      white-space: pre-line;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: #244866;
+      font-size: .86rem;
+    }
+
+    .answer-strip,
+    .correction-strip {
+      display: grid;
+      gap: 3px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(20, 115, 109, .26);
+      background: var(--teal-soft);
+    }
+
+    .answer-strip span,
+    .correction-strip span {
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .answer-strip strong,
+    .correction-strip strong {
+      font-size: 1.15rem;
+      line-height: 1.35;
+    }
+
+    .formula {
+      font-family: Cambria, "Times New Roman", "Noto Serif TC", serif;
+      font-size: 1.08em;
+      white-space: nowrap;
+    }
+
+    .frac {
+      display: inline-grid;
+      grid-template-rows: auto auto;
+      place-items: center;
+      vertical-align: middle;
+      line-height: 1.05;
+      margin: 0 .08em;
+    }
+
+    .frac > span:first-child {
+      border-bottom: 1px solid currentColor;
+      min-width: 100%;
+      padding: 0 .12em .03em;
+    }
+
+    .frac > span:last-child {
+      padding: .03em .12em 0;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .step {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .step-top {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .step-title {
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .step-body {
+      margin: 2px 0 0;
+      color: #293443;
+    }
+
+    .detail {
+      display: none;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--gold-soft);
+      color: #403019;
+    }
+
+    .step.open .detail { display: block; }
+
+    .step-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-left: 44px;
+    }
+
+    .side-panel {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .diagram,
+    .mini-panel,
+    .check-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .diagram {
+      overflow: hidden;
+      padding: 12px;
+    }
+
+    .diagram img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+    }
+
+    .diagram .placeholder {
+      display: grid;
+      min-height: 118px;
+      place-items: center;
+      padding: 16px;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(49, 95, 139, .18) 50%, transparent 51%),
+        repeating-linear-gradient(0deg, rgba(20, 115, 109, .08), rgba(20, 115, 109, .08) 1px, transparent 1px, transparent 18px),
+        var(--blue-soft);
+      text-align: center;
+      font-weight: 800;
+      color: #244866;
+    }
+
+    .mini-panel,
+    .check-panel {
+      padding: 12px;
+    }
+
+    .mini-panel ul {
+      margin: 0;
+      padding-left: 1.15rem;
+    }
+
+    .mini-panel li + li { margin-top: 5px; }
+
+    .warning-panel.hidden { display: none; }
+
+    .concept-note {
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--red-soft);
+      color: #4a1f1a;
+    }
+
+    .check-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .check-feedback {
+      min-height: 28px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .check-feedback.correct { color: var(--green); }
+    .check-feedback.wrong { color: var(--red); }
+
+    .comments {
+      grid-column: 1 / -1;
+      display: grid;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .comment-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .comment {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .comment-meta {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .comment-text { margin: 4px 0 0; }
+
+    .comment-form {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      width: 100%;
+      min-height: 38px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .comment-form textarea {
+      min-height: 38px;
+      resize: vertical;
+    }
+
+    .empty {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    @media (max-width: 940px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        width: min(100% - 24px, 760px);
+        padding-top: 12px;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .question-nav {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .nav-link {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        min-height: 58px;
+      }
+
+      .nav-title {
+        text-align: center;
+        font-size: .8rem;
+      }
+
+      .nav-meta { display: none; }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .snapshot img {
+        height: 180px;
+      }
+
+      .quiz-card {
+        grid-template-columns: 1fr;
+      }
+
+      .comment-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .question-nav {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .toolbar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .tool-button { width: 100%; }
+
+      .quiz-card {
+        padding: 12px;
+      }
+
+      .question-text {
+        font-size: 1rem;
+      }
+
+      .step-actions {
+        padding-left: 0;
+      }
+
+      .snapshot img {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="題目導覽">
+      <div class="brand">
+        <strong>0604 物理小考訂正</strong>
+        <span>力學二與熱學｜範圍 4-5</span>
+      </div>
+      <nav id="questionNav" class="question-nav"></nav>
+      <div id="syncStatus" class="sync-pill"><span class="dot"></span><span>本機留言</span></div>
+      <span class="source-pill">題目：Word 檔｜答案：照片紅字</span>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <h1>碰撞守恆，一題一題拆開</h1>
+          <p class="subtitle">把照片上的紅字答案整理成互動式詳解：先判斷守恆量，再看圖讀速度，最後用質心速度與一維彈性碰撞公式收束。每題都有易錯提醒與小檢核。</p>
+        </div>
+        <figure class="snapshot">
+          <img src="assets/answer-photo-0604.jpg" alt="0604 小考手寫答案照片">
+          <a href="assets/answer-photo-0604.jpg" target="_blank" rel="noreferrer">
+            <span>手寫答案對照</span>
+            <strong>開啟原圖</strong>
+          </a>
+        </figure>
+      </header>
+
+      <div class="toolbar" aria-label="詳解控制">
+        <button class="tool-button" id="showAllQuestions" type="button" aria-pressed="false">▦ 顯示全部</button>
+        <button class="tool-button" id="expandAll" type="button">＋ 全部展開</button>
+        <button class="tool-button" id="collapseAll" type="button">－ 全部收合</button>
+        <button class="tool-button" id="toggleWarnings" type="button" aria-pressed="true">！易錯提醒</button>
+      </div>
+
+      <section id="quizList" aria-label="題目與詳解"></section>
+    </main>
+  </div>
+
+  <template id="commentTemplate">
+    <article class="comment">
+      <div class="comment-meta"></div>
+      <p class="comment-text"></p>
+    </article>
+  </template>
+
+  <script>
+    const COMMENT_BACKEND = {
+      supabaseUrl: "",
+      supabaseAnonKey: "",
+      table: "quiz_comments"
+    };
+
+    const hasSupabase = COMMENT_BACKEND.supabaseUrl && COMMENT_BACKEND.supabaseAnonKey;
+
+    const diagrams = {
+      none: `<div class="placeholder">是非題重點：受力、動量、動能</div>`,
+      graph: `<img src="assets/image1.png" alt="甲乙兩球速度對時間圖">`,
+      twoBalls: `<img src="assets/image2.png" alt="甲乙兩球相向而行示意圖">`,
+      threeBlocks: `<img src="assets/image3.png" alt="甲乙丙三物體在水平面上的碰撞示意圖">`
+    };
+
+    const quiz = [
+      {
+        id: "q1",
+        nav: "作用力相同",
+        title: "物體碰撞時，小質量會受較大的力嗎？",
+        question: "物體碰撞時，質量較小者會受到較大的力，並會以較大的加速度運動。（是非題，若錯誤請訂正）",
+        answer: "錯。兩物體受力大小相同、方向相反；質量較小者加速度較大。",
+        concepts: ["牛頓第三定律", "F = ma", "作用力與反作用力"],
+        pitfalls: ["把加速度較大誤解成受力較大", "忘記碰撞雙方互施的力必等大反向", "只看其中一物體，沒有成對分析"],
+        diagram: "none",
+        check: {
+          prompt: "碰撞瞬間，甲對乙的力與乙對甲的力大小關係是？",
+          options: ["一樣大", "質量小者受力大", "速度大者受力大"],
+          answer: 0,
+          feedback: "作用力與反作用力大小相等、方向相反；不同的是 a = F/m，所以小質量加速度較大。"
+        },
+        steps: [
+          {
+            title: "先用第三定律判斷受力",
+            body: "碰撞時，甲推乙、乙也推甲，這一對力大小相同、方向相反。",
+            detail: "這裡不管兩者質量是否相同，也不管速度大小如何，成對的作用力與反作用力一定同時存在、等大反向。"
+          },
+          {
+            title: "再用 F = ma 判斷加速度",
+            body: "兩者受力大小 F 相同，但 <span class='formula'>a = F/m</span>，所以質量較小者加速度較大。",
+            detail: "題目後半句「以較大的加速度運動」是對的；前半句「受到較大的力」是錯的，所以整句仍然判錯。"
+          },
+          {
+            title: "寫成訂正句",
+            body: "正確訂正：受力相同（作用力與反作用力），但加速度因質量較小而較大。",
+            detail: "是非題訂正要指出錯在何處：不是力變大，而是同樣大小的力作用在較小質量上，造成較大加速度。"
+          }
+        ]
+      },
+      {
+        id: "q2",
+        nav: "碰撞中守恆",
+        title: "彈性碰撞中，總動量與總動能何時守恆？",
+        question: "兩物體作彈性碰撞，無論碰撞過程或碰撞前後，總動量與總動能都須守恆。（是非題，若錯誤請訂正）",
+        answer: "錯。總動量在碰撞過程與碰撞前後皆守恆；總動能只要求碰撞前後相等，碰撞過程中可能暫存為彈性位能或熱等形式。",
+        concepts: ["彈性碰撞", "動量守恆", "動能守恆的時間點"],
+        pitfalls: ["把前後守恆說成每一瞬間都守恆", "忽略碰撞壓縮時可能有彈性位能", "把總能量與總動能混為一談"],
+        diagram: "none",
+        check: {
+          prompt: "彈性碰撞在碰撞壓縮最劇烈的瞬間，總動能一定等於碰撞前嗎？",
+          options: ["不一定", "一定", "只有同質量時一定"],
+          answer: 0,
+          feedback: "彈性碰撞要求碰撞前後總動能相等；過程中動能可能暫時轉成彈性位能。"
+        },
+        steps: [
+          {
+            title: "先分清楚兩種守恆",
+            body: "若系統外力可忽略，總動量在整個碰撞過程都守恆。",
+            detail: "動量守恆來自系統所受外力衝量為 0。內力再大也只是系統內互相交換動量，不改變總動量。"
+          },
+          {
+            title: "彈性碰撞的動能判準",
+            body: "彈性碰撞的定義是碰撞前後總動能相同。",
+            detail: "碰撞正在發生時，物體可能變形，部分動能暫存成彈性位能；若題目要求「無論碰撞過程或前後總動能都守恆」，這句太強。"
+          },
+          {
+            title: "寫成訂正句",
+            body: "訂正：動量無誤；但碰撞過程中總動能不一定守恆，只需碰撞前後總動能相等。",
+            detail: "照片紅字的重點正是「動量無誤，但碰撞過程中總動能不守恆」，這是這題的得分句。"
+          }
+        ]
+      },
+      {
+        id: "q3",
+        nav: "速度圖判讀",
+        title: "由 v-t 圖求質心速度與碰撞時間",
+        question: "在一直線上的甲、乙兩球發生正面碰撞，而兩球碰撞前到碰撞後的速度 v 隨時間 t 變化之關係如圖所示：\n(1) 系統的質心速度量值為______ m/s。\n(2) 此碰撞是否為彈性碰撞？為什麼？\n(3) 在_______ s 時，兩球最接近。\n(4) 整個碰撞過程費時_______ s。",
+        answer: "(1) 3 m/s；(2) 是，接近速率 = 遠離速率 = 3 m/s；(3) 0.75 s；(4) 0.5 s。",
+        concepts: ["v-t 圖", "相對速度", "一維彈性碰撞", "接近與遠離速率"],
+        pitfalls: ["把兩線交會時間誤當碰撞起點或終點", "忘記最接近發生在速度相等時", "只看動能，沒有用相對速度判準", "碰撞時間看成 1 秒而不是 0.5 秒"],
+        diagram: "graph",
+        check: {
+          prompt: "兩球最接近時，兩球速度應該如何？",
+          options: ["速度相等", "距離最大", "甲速度為 0"],
+          answer: 0,
+          feedback: "相對速度為 0 時距離不再縮小也尚未拉開，所以就是最接近的時刻。"
+        },
+        steps: [
+          {
+            title: "讀出碰撞前後速度",
+            body: "甲：碰前 5 m/s、碰後 1 m/s；乙：碰前 2 m/s、碰後 4 m/s。",
+            detail: "圖上 0 到 0.5 s 是碰撞前穩定速度；1 s 之後是碰撞後穩定速度。中間 0.5 到 1 s 才是碰撞過程。"
+          },
+          {
+            title: "用相對速度判斷彈性",
+            body: "碰前接近速率 <span class='formula'>5 - 2 = 3</span>；碰後遠離速率 <span class='formula'>4 - 1 = 3</span>。",
+            detail: "一維彈性碰撞可用「接近速率 = 遠離速率」判斷。這題兩者同為 3 m/s，所以是彈性碰撞。"
+          },
+          {
+            title: "找最接近時間",
+            body: "最接近發生在兩球速度相同時，從圖上兩線交會於 <span class='formula'>t = 0.75 s</span>。",
+            detail: "碰撞開始後，甲仍比乙快時距離繼續縮短；速度相等後乙變得比甲快，距離開始拉開。交會點就是最近。"
+          },
+          {
+            title: "碰撞歷時與質心速率",
+            body: "碰撞從 0.5 s 到 1.0 s，費時 <span class='formula'>0.5 s</span>；系統質心速度為兩球共同速度時的 <span class='formula'>3 m/s</span>。",
+            detail: "速度相等的那一刻，兩球相對運動瞬間為 0，因此共同速度就是質心速度。圖上交會點位於 3 m/s。"
+          }
+        ]
+      },
+      {
+        id: "q4",
+        nav: "兩球碰撞",
+        title: "2 kg 與 3 kg 相向碰撞",
+        question: "光滑平面上有甲、乙兩小球，若甲球質量為 2 kg、乙球質量為 3 kg，分別以量值 5 m/s 與 15 m/s 之初速相向而行，令向右為正，回答下列問題：\n(1) 若甲、乙兩球作一維彈性碰撞，則碰撞後：甲球速度量值為______ m/s，方向向_____、乙球速度量值為______ m/s，方向向_____。\n(2) 若甲、乙兩球作一維非彈性碰撞，甲球撞後向左速度為 16 m/s，則乙球撞後速度為何？",
+        answer: "(1) 甲 19 m/s，向左；乙 1 m/s，向右。(2) 乙碰後速度 = -1 m/s，也就是 1 m/s 向左。",
+        concepts: ["質心速度", "彈性碰撞速度反轉", "動量守恆", "正負號"],
+        pitfalls: ["把乙的初速寫成 +15，而不是 -15", "算出負號後忘記轉成方向", "非彈性小題仍拿彈性碰撞公式硬套", "把量值與速度混寫"],
+        diagram: "twoBalls",
+        check: {
+          prompt: "令向右為正，乙球初速度應寫成？",
+          options: ["-15 m/s", "+15 m/s", "0 m/s"],
+          answer: 0,
+          feedback: "乙一開始向左，所以速度是 -15 m/s；量值才是 15 m/s。"
+        },
+        steps: [
+          {
+            title: "先算質心速度",
+            body: "<span class='formula'>v_c = (2×5 + 3×(-15)) / (2 + 3) = -7 m/s</span>。",
+            detail: "向右為正，甲為 +5 m/s，乙為 -15 m/s。總動量為 10 - 45 = -35 kg·m/s，總質量 5 kg，所以質心速度 -7 m/s。"
+          },
+          {
+            title: "彈性碰撞：質心系速度反轉",
+            body: "在質心系中速度反向，再加回 <span class='formula'>v_c</span>。",
+            detail: "一維彈性碰撞在質心座標中，就是每個物體速度方向反轉、大小不變。這比直接背公式更不容易錯符號。"
+          },
+          {
+            title: "求甲、乙彈性碰撞後速度",
+            body: "<span class='formula'>v'_甲 = 2v_c - v_甲 = 2(-7) - 5 = -19 m/s</span>；<span class='formula'>v'_乙 = 2v_c - v_乙 = 2(-7) - (-15) = 1 m/s</span>。",
+            detail: "所以甲速度量值 19 m/s，方向向左；乙速度量值 1 m/s，方向向右。照片紅字也用這個質心速度反轉法。"
+          },
+          {
+            title: "非彈性小題只用動量守恆",
+            body: "<span class='formula'>2×5 + 3×(-15) = 2×(-16) + 3v'_乙</span>，解得 <span class='formula'>v'_乙 = -1 m/s</span>。",
+            detail: "題目已說非彈性，而且給了甲碰後速度，因此不能再用彈性碰撞的速度反轉。只要守總動量即可。"
+          }
+        ]
+      },
+      {
+        id: "q5",
+        nav: "三物連續碰撞",
+        title: "三物體連續一維彈性碰撞",
+        question: "圖中一光滑水平面上有三物體，甲、乙的質量均為 m，丙的質量為 3m。開始時，乙和丙均為靜止而甲以等速度 v 向右行進。設該三物體間的碰撞皆為一維彈性碰撞，則在所有碰撞都結束後，各物體運動速度為何？（請寫出量值跟方向）\n甲：\n乙：\n丙：",
+        answer: "甲：v/2，向左；乙：靜止；丙：v/2，向右。",
+        concepts: ["等質量彈性碰撞", "不同質量彈性碰撞", "連續碰撞", "速度交換"],
+        pitfalls: ["忘記甲乙同質量會速度交換", "乙撞丙後漏掉乙反彈", "沒有檢查乙反彈後還會再撞甲", "最後只寫量值沒有寫方向"],
+        diagram: "threeBlocks",
+        check: {
+          prompt: "甲第一次撞到乙後，因為甲乙等質量且乙原靜止，會發生什麼？",
+          options: ["甲停、乙以 v 向右", "甲以 v 向左", "兩者一起以 v/2 向右"],
+          answer: 0,
+          feedback: "等質量一維彈性碰撞會交換速度，所以甲停下，乙接手以 v 向右。"
+        },
+        steps: [
+          {
+            title: "甲撞乙：等質量速度交換",
+            body: "甲、乙質量同為 m，且乙原本靜止，所以碰後甲靜止，乙以 <span class='formula'>v</span> 向右。",
+            detail: "這是等質量一維彈性碰撞的經典結果：兩物體交換速度。"
+          },
+          {
+            title: "乙撞丙：用一維彈性碰撞公式",
+            body: "乙質量 m、速度 v；丙質量 3m、原靜止。",
+            detail: "對「質量 m 以速度 v 撞上靜止質量 3m」：<span class='formula'>v'_乙 = (m - 3m)/(m + 3m) v = -v/2</span>，<span class='formula'>v'_丙 = 2m/(m + 3m) v = v/2</span>。"
+          },
+          {
+            title: "乙反彈後再撞甲",
+            body: "乙以 <span class='formula'>v/2</span> 向左，甲原本靜止；甲乙等質量彈性碰撞後再次交換速度。",
+            detail: "所以乙停下，甲取得乙原本的速度，變成 <span class='formula'>v/2</span> 向左。"
+          },
+          {
+            title: "整理所有碰撞結束後",
+            body: "甲：<span class='formula'>v/2</span> 向左；乙：靜止；丙：<span class='formula'>v/2</span> 向右。",
+            detail: "最後甲往左、丙往右，兩者逐漸遠離乙，因此不會再發生新的碰撞。"
+          }
+        ]
+      }
+    ];
+
+    const storageKey = "datong-0604-comments-v1";
+    let comments = [];
+    let activeQuestionId = "q1";
+    let showAllQuestions = false;
+
+    const nav = document.querySelector("#questionNav");
+    const quizList = document.querySelector("#quizList");
+    const syncStatus = document.querySelector("#syncStatus");
+
+    function render() {
+      nav.innerHTML = quiz.map((item, index) => `
+        <button class="nav-link" type="button" data-question-id="${item.id}" aria-pressed="${item.id === activeQuestionId}">
+          <span class="nav-index">${index + 1}</span>
+          <span class="nav-title">${escapeHtml(item.nav)}</span>
+          <span class="nav-meta" data-comment-count="${item.id}"></span>
+        </button>
+      `).join("");
+
+      quizList.innerHTML = quiz.map((item, index) => questionCard(item, index)).join("");
+      bindStepControls();
+      bindForms();
+      bindQuestionNav();
+      bindChecks();
+      setQuestionView(activeQuestionId, false);
+      renderAllComments();
+    }
+
+    function questionCard(item, index) {
+      return `
+        <article class="quiz-card" id="${item.id}">
+          <div class="question-main">
+            <header class="question-header">
+              <span class="q-badge">${index + 1}</span>
+              <h2>${escapeHtml(item.title)}</h2>
+            </header>
+            <p class="question-text">${escapeHtml(item.question)}</p>
+            <div class="chips" aria-label="使用概念">
+              ${item.concepts.map(concept => `<span class="chip">${escapeHtml(concept)}</span>`).join("")}
+            </div>
+            <div class="answer-strip">
+              <span>照片答案整理</span>
+              <strong>${item.answer}</strong>
+            </div>
+            <div class="steps">
+              ${item.steps.map((step, stepIndex) => stepCard(item.id, step, stepIndex)).join("")}
+            </div>
+          </div>
+          <aside class="side-panel">
+            <div class="diagram">${diagrams[item.diagram]}</div>
+            <section class="check-panel" data-check="${item.id}">
+              <h3>小檢核</h3>
+              <p class="empty">${escapeHtml(item.check.prompt)}</p>
+              <div class="check-options">
+                ${item.check.options.map((option, optionIndex) => `
+                  <button class="choice-button" type="button" data-question-id="${item.id}" data-option="${optionIndex}">
+                    ${escapeHtml(option)}
+                  </button>
+                `).join("")}
+              </div>
+              <p class="check-feedback" data-feedback="${item.id}"></p>
+            </section>
+            <section class="mini-panel warning-panel">
+              <h3>容易寫錯</h3>
+              <ul>
+                ${item.pitfalls.map(pitfall => `<li>${escapeHtml(pitfall)}</li>`).join("")}
+              </ul>
+            </section>
+          </aside>
+          <section class="comments" data-question-id="${item.id}">
+            <h3>同學提問</h3>
+            <div class="comment-list" data-comment-list="${item.id}"></div>
+            <form class="comment-form" data-form="${item.id}">
+              <input name="name" maxlength="18" placeholder="姓名或座號" autocomplete="name">
+              <textarea name="message" maxlength="500" placeholder="哪一步卡住？也可以寫自己的訂正句。"></textarea>
+              <button class="comment-button" type="submit">送出</button>
+            </form>
+          </section>
+        </article>
+      `;
+    }
+
+    function stepCard(questionId, step, stepIndex) {
+      const stepId = `${questionId}-s${stepIndex + 1}`;
+      return `
+        <section class="step" data-step-id="${stepId}">
+          <div class="step-top">
+            <span class="step-number">${stepIndex + 1}</span>
+            <div>
+              <p class="step-title">${escapeHtml(step.title)}</p>
+              <p class="step-body">${step.body}</p>
+            </div>
+          </div>
+          <div class="detail">${step.detail}</div>
+          <div class="step-actions">
+            <button class="detail-toggle" type="button" aria-expanded="false">詳解</button>
+            <button class="ghost-button ask-step" type="button" data-question-id="${questionId}" data-step-label="第 ${stepIndex + 1} 步：${escapeHtml(step.title)}">我卡在這步</button>
+          </div>
+        </section>
+      `;
+    }
+
+    function bindStepControls() {
+      document.querySelectorAll(".detail-toggle").forEach(button => {
+        button.addEventListener("click", () => {
+          const step = button.closest(".step");
+          const isOpen = step.classList.toggle("open");
+          button.setAttribute("aria-expanded", String(isOpen));
+          button.textContent = isOpen ? "收合" : "詳解";
+        });
+      });
+
+      document.querySelectorAll(".ask-step").forEach(button => {
+        button.addEventListener("click", () => {
+          const form = document.querySelector(`[data-form="${button.dataset.questionId}"]`);
+          const textarea = form.querySelector("textarea");
+          textarea.value = `${button.dataset.stepLabel}：`;
+          textarea.focus();
+        });
+      });
+    }
+
+    function bindChecks() {
+      document.querySelectorAll(".choice-button").forEach(button => {
+        button.addEventListener("click", () => {
+          const question = quiz.find(item => item.id === button.dataset.questionId);
+          const optionIndex = Number(button.dataset.option);
+          const feedback = document.querySelector(`[data-feedback="${question.id}"]`);
+          document.querySelectorAll(`[data-question-id="${question.id}"].choice-button`).forEach(choice => {
+            choice.classList.toggle("selected", choice === button);
+          });
+          const isCorrect = optionIndex === question.check.answer;
+          feedback.textContent = isCorrect ? `答對。${question.check.feedback}` : `再想一下。${question.check.feedback}`;
+          feedback.classList.toggle("correct", isCorrect);
+          feedback.classList.toggle("wrong", !isCorrect);
+        });
+      });
+    }
+
+    function bindForms() {
+      document.querySelectorAll(".comment-form").forEach(form => {
+        form.addEventListener("submit", async event => {
+          event.preventDefault();
+          const questionId = form.dataset.form;
+          const formData = new FormData(form);
+          const payload = {
+            question_id: questionId,
+            step_id: "",
+            name: String(formData.get("name") || "同學").trim().slice(0, 18) || "同學",
+            message: String(formData.get("message") || "").trim().slice(0, 500),
+            created_at: new Date().toISOString()
+          };
+          if (!payload.message) return;
+          await addComment(payload);
+          form.reset();
+          renderComments(questionId);
+        });
+      });
+    }
+
+    function bindQuestionNav() {
+      document.querySelectorAll(".nav-link").forEach(button => {
+        button.addEventListener("click", () => {
+          showAllQuestions = false;
+          setQuestionView(button.dataset.questionId, true);
+        });
+      });
+    }
+
+    function setQuestionView(questionId, shouldScroll) {
+      activeQuestionId = questionId;
+      document.querySelector("#showAllQuestions").setAttribute("aria-pressed", String(showAllQuestions));
+      document.querySelectorAll(".quiz-card").forEach(card => {
+        card.classList.toggle("is-hidden", !showAllQuestions && card.id !== activeQuestionId);
+      });
+      document.querySelectorAll(".nav-link").forEach(button => {
+        const isActive = !showAllQuestions && button.dataset.questionId === activeQuestionId;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+      if (shouldScroll) {
+        document.querySelector("#quizList").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    async function loadComments() {
+      if (hasSupabase) {
+        try {
+          const response = await fetch(`${COMMENT_BACKEND.supabaseUrl}/rest/v1/${COMMENT_BACKEND.table}?select=*&order=created_at.asc`, {
+            headers: {
+              apikey: COMMENT_BACKEND.supabaseAnonKey,
+              Authorization: `Bearer ${COMMENT_BACKEND.supabaseAnonKey}`
+            }
+          });
+          if (!response.ok) throw new Error("comment fetch failed");
+          comments = await response.json();
+          updateSync(true);
+          return;
+        } catch (error) {
+          console.warn(error);
+        }
+      }
+
+      comments = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      updateSync(false);
+    }
+
+    async function addComment(payload) {
+      if (hasSupabase) {
+        try {
+          const response = await fetch(`${COMMENT_BACKEND.supabaseUrl}/rest/v1/${COMMENT_BACKEND.table}`, {
+            method: "POST",
+            headers: {
+              apikey: COMMENT_BACKEND.supabaseAnonKey,
+              Authorization: `Bearer ${COMMENT_BACKEND.supabaseAnonKey}`,
+              "Content-Type": "application/json",
+              Prefer: "return=representation"
+            },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) throw new Error("comment insert failed");
+          const inserted = await response.json();
+          comments.push(inserted[0] || payload);
+          return;
+        } catch (error) {
+          console.warn(error);
+        }
+      }
+
+      comments.push({ ...payload, id: crypto.randomUUID() });
+      localStorage.setItem(storageKey, JSON.stringify(comments));
+    }
+
+    function renderAllComments() {
+      quiz.forEach(item => renderComments(item.id));
+      updateCommentCounts();
+    }
+
+    function renderComments(questionId) {
+      const list = document.querySelector(`[data-comment-list="${questionId}"]`);
+      const filtered = comments.filter(comment => comment.question_id === questionId);
+      if (!filtered.length) {
+        list.innerHTML = `<p class="empty">目前還沒有提問。</p>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      const template = document.querySelector("#commentTemplate");
+      filtered.forEach(comment => {
+        const node = template.content.cloneNode(true);
+        node.querySelector(".comment-meta").textContent = `${comment.name || "同學"} · ${formatDate(comment.created_at)}`;
+        node.querySelector(".comment-text").textContent = comment.message;
+        list.appendChild(node);
+      });
+      updateCommentCounts();
+    }
+
+    function updateCommentCounts() {
+      quiz.forEach(item => {
+        const count = comments.filter(comment => comment.question_id === item.id).length;
+        const label = document.querySelector(`[data-comment-count="${item.id}"]`);
+        if (label) label.textContent = count ? `${count} 則` : "";
+      });
+    }
+
+    function updateSync(online) {
+      const dot = syncStatus.querySelector(".dot");
+      dot.classList.toggle("online", online);
+      syncStatus.querySelector("span:last-child").textContent = online ? "共享留言" : "本機留言";
+    }
+
+    function formatDate(value) {
+      try {
+        return new Intl.DateTimeFormat("zh-TW", {
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(new Date(value));
+      } catch {
+        return "";
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.querySelector("#expandAll").addEventListener("click", () => {
+      document.querySelectorAll(".step").forEach(step => step.classList.add("open"));
+      document.querySelectorAll(".detail-toggle").forEach(button => {
+        button.setAttribute("aria-expanded", "true");
+        button.textContent = "收合";
+      });
+    });
+
+    document.querySelector("#collapseAll").addEventListener("click", () => {
+      document.querySelectorAll(".step").forEach(step => step.classList.remove("open"));
+      document.querySelectorAll(".detail-toggle").forEach(button => {
+        button.setAttribute("aria-expanded", "false");
+        button.textContent = "詳解";
+      });
+    });
+
+    document.querySelector("#toggleWarnings").addEventListener("click", event => {
+      const pressed = event.currentTarget.getAttribute("aria-pressed") === "true";
+      event.currentTarget.setAttribute("aria-pressed", String(!pressed));
+      document.querySelectorAll(".warning-panel").forEach(panel => panel.classList.toggle("hidden", pressed));
+    });
+
+    document.querySelector("#showAllQuestions").addEventListener("click", event => {
+      showAllQuestions = event.currentTarget.getAttribute("aria-pressed") !== "true";
+      setQuestionView(activeQuestionId, false);
+    });
+
+    render();
+    loadComments().then(renderAllComments);
+  </script>
+</body>
+</html>
