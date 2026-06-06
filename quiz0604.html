@@ -208,32 +208,91 @@
       max-width: 70ch;
     }
 
-    .snapshot {
-      overflow: hidden;
+    .hero-card {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--surface);
       box-shadow: var(--shadow);
     }
 
-    .snapshot img {
-      width: 100%;
-      height: 155px;
-      object-fit: cover;
-      object-position: 50% 48%;
-      filter: saturate(.98) contrast(1.02);
+    .collision-visual {
+      position: relative;
+      min-height: 128px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(0deg, transparent 63%, rgba(23, 33, 47, .18) 64%, transparent 65%),
+        var(--blue-soft);
     }
 
-    .snapshot a {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
+    .collision-ball {
+      position: absolute;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      background: #fff;
+      font-weight: 900;
+      transform: translateY(-50%);
+    }
+
+    .collision-ball.left { left: 34px; }
+    .collision-ball.right { right: 34px; }
+
+    .collision-arrow {
+      position: absolute;
+      top: calc(50% - 5px);
+      width: 78px;
+      height: 10px;
+      background: var(--teal);
+    }
+
+    .collision-arrow::after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+    }
+
+    .collision-arrow.left {
+      left: 98px;
+    }
+
+    .collision-arrow.left::after {
+      right: -1px;
+      border-left: 20px solid var(--teal);
+    }
+
+    .collision-arrow.right {
+      right: 98px;
+      background: var(--red);
+    }
+
+    .collision-arrow.right::after {
+      left: -1px;
+      border-right: 20px solid var(--red);
+    }
+
+    .hero-equation {
+      margin: 0;
       color: var(--ink);
-      text-decoration: none;
-      font-size: .9rem;
-      border-top: 1px solid var(--line);
+      font-family: Cambria, "Times New Roman", "Noto Serif TC", serif;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .hero-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
     }
 
     .toolbar {
@@ -618,10 +677,6 @@
         min-height: 0;
       }
 
-      .snapshot img {
-        height: 180px;
-      }
-
       .quiz-card {
         grid-template-columns: 1fr;
       }
@@ -655,9 +710,6 @@
         padding-left: 0;
       }
 
-      .snapshot img {
-        height: 150px;
-      }
     }
   </style>
 </head>
@@ -676,16 +728,19 @@
     <main>
       <header class="topbar">
         <div>
-          <h1>碰撞守恆，一題一題拆開</h1>
-          <p class="subtitle">把照片上的紅字答案整理成互動式詳解：先判斷守恆量，再看圖讀速度，最後用質心速度與一維彈性碰撞公式收束。每題都有易錯提醒與小檢核。</p>
+          <h1>分步詳解</h1>
+          <p class="subtitle">每一步都可展開；卡住時可把問題留在該題下方，方便同學一起補洞。先判斷守恆量，再讀圖或代公式收束。</p>
         </div>
-        <figure class="snapshot">
-          <img src="assets/answer-photo-0604.jpg" alt="0604 小考手寫答案照片">
-          <a href="assets/answer-photo-0604.jpg" target="_blank" rel="noreferrer">
-            <span>手寫答案對照</span>
-            <strong>開啟原圖</strong>
-          </a>
-        </figure>
+        <aside class="hero-card" aria-label="碰撞守恆概念簡圖">
+          <div class="collision-visual">
+            <span class="collision-ball left">甲</span>
+            <span class="collision-arrow left"></span>
+            <span class="collision-arrow right"></span>
+            <span class="collision-ball right">乙</span>
+          </div>
+          <p class="hero-equation">Σp<sub>前</sub> = Σp<sub>後</sub></p>
+          <p class="hero-note">彈性碰撞再加上接近速率 = 遠離速率。</p>
+        </aside>
       </header>
 
       <div class="toolbar" aria-label="詳解控制">
@@ -945,7 +1000,7 @@
               ${item.concepts.map(concept => `<span class="chip">${escapeHtml(concept)}</span>`).join("")}
             </div>
             <div class="answer-strip">
-              <span>照片答案整理</span>
+              <span>答案整理</span>
               <strong>${item.answer}</strong>
             </div>
             <div class="steps">

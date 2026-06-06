@@ -98,15 +98,7 @@
       box-shadow: var(--shadow);
     }
 
-    .hero-panel img {
-      display: block;
-      width: 100%;
-      height: 188px;
-      object-fit: cover;
-      object-position: 50% 44%;
-    }
-
-    .hero-panel div {
+    .hero-panel-text {
       display: grid;
       gap: 2px;
       padding: 10px 12px;
@@ -204,6 +196,93 @@
       font-family: Cambria, "Times New Roman", "Noto Serif TC", serif;
       font-size: clamp(1.28rem, 3vw, 2rem);
       font-weight: 700;
+    }
+
+    .collision-art {
+      display: grid;
+      place-items: center;
+      min-height: 178px;
+      padding: 22px;
+      background:
+        linear-gradient(0deg, transparent 64%, rgba(23, 33, 47, .16) 65%, transparent 66%),
+        linear-gradient(135deg, var(--teal-soft), var(--blue-soft));
+    }
+
+    .hero-panel .collision-art {
+      min-height: 188px;
+    }
+
+    .collision-board {
+      position: relative;
+      width: min(340px, 100%);
+      height: 120px;
+    }
+
+    .ball {
+      position: absolute;
+      top: 50%;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .86);
+      font-weight: 900;
+      transform: translateY(-50%);
+    }
+
+    .ball.left { left: 8px; }
+    .ball.right { right: 8px; }
+
+    .arrow {
+      position: absolute;
+      top: calc(50% - 5px);
+      width: 86px;
+      height: 10px;
+      background: var(--teal);
+    }
+
+    .arrow::after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      border-top: 13px solid transparent;
+      border-bottom: 13px solid transparent;
+    }
+
+    .arrow.left {
+      left: 74px;
+    }
+
+    .arrow.left::after {
+      right: -1px;
+      border-left: 20px solid var(--teal);
+    }
+
+    .arrow.right {
+      right: 74px;
+      background: var(--red);
+    }
+
+    .arrow.right::after {
+      left: -1px;
+      border-right: 20px solid var(--red);
+    }
+
+    .momentum-label {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      padding: 4px 9px;
+      border: 1px solid rgba(23, 33, 47, .18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .72);
+      color: #24374b;
+      font-family: Cambria, "Times New Roman", "Noto Serif TC", serif;
+      font-weight: 800;
+      transform: translateX(-50%);
+      white-space: nowrap;
     }
 
     .formula-line {
@@ -339,8 +418,16 @@
         <p class="subtitle">每份小考保留自己的互動詳解、易錯提醒與同學提問區。新的小考會接在這裡，根網址固定當作入口頁。</p>
       </div>
       <aside class="hero-panel">
-        <img src="assets/answer-photo-0604.jpg" alt="0604 小考手寫答案照片">
-        <div>
+        <div class="collision-art" aria-label="0604 碰撞守恆簡圖">
+          <div class="collision-board">
+            <span class="ball left">甲</span>
+            <span class="arrow left"></span>
+            <span class="arrow right"></span>
+            <span class="ball right">乙</span>
+            <span class="momentum-label">Σp 前 = Σp 後</span>
+          </div>
+        </div>
+        <div class="hero-panel-text">
           <strong>最新：0604 碰撞守恆</strong>
           <span>範圍 4-5｜兩球與三物體彈性碰撞</span>
         </div>
@@ -377,8 +464,8 @@
         description: "作用力與加速度、碰撞過程守恆、v-t 圖、兩球與三物體彈性碰撞。",
         href: "quiz0604.html",
         topics: ["動量守恆", "彈性碰撞", "質心速度", "速度圖"],
-        meta: "5 題｜照片答案｜小檢核",
-        visual: "photo"
+        meta: "5 題｜互動步驟｜小檢核",
+        visual: "collision"
       }
     ];
 
@@ -394,7 +481,7 @@
       return `
         <a class="quiz-card${isHidden ? " hidden" : ""}" href="${item.href}" data-range="${item.range}">
           <div class="visual">
-            ${item.visual === "photo" ? `<img src="assets/answer-photo-0604.jpg" alt="0604 小考手寫答案照片">` : formulaArt()}
+            ${item.visual === "collision" ? collisionArt() : formulaArt()}
           </div>
           <div class="card-body">
             <div class="card-top">
@@ -421,6 +508,20 @@
             <div class="formula-line"><span>U</span><span>∝ x²</span></div>
             <div class="formula-line"><span>E</span><span>K + U</span></div>
             <div class="formula-line"><span>Wnc</span><span>ΔE</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function collisionArt() {
+      return `
+        <div class="collision-art" aria-label="0604 小考碰撞視覺">
+          <div class="collision-board">
+            <span class="ball left">甲</span>
+            <span class="arrow left"></span>
+            <span class="arrow right"></span>
+            <span class="ball right">乙</span>
+            <span class="momentum-label">Σp 前 = Σp 後</span>
           </div>
         </div>
       `;
