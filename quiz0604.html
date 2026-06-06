@@ -722,7 +722,7 @@
       </div>
       <nav id="questionNav" class="question-nav"></nav>
       <div id="syncStatus" class="sync-pill"><span class="dot"></span><span>本機留言</span></div>
-      <span class="source-pill">題目：Word 檔｜答案：照片紅字</span>
+      <span class="source-pill">題目：Word 檔｜答案：課堂訂正</span>
     </aside>
 
     <main>
@@ -763,8 +763,8 @@
 
   <script>
     const COMMENT_BACKEND = {
-      supabaseUrl: "",
-      supabaseAnonKey: "",
+      supabaseUrl: "https://ovaachkrrnlsjscphdtz.supabase.co",
+      supabaseAnonKey: "sb_publishable_2n8khQ8IMMXRLrQIlDOdOg_rHb0ES82",
       table: "quiz_comments"
     };
 
@@ -779,7 +779,7 @@
 
     const quiz = [
       {
-        id: "q1",
+        id: "0604-q1",
         nav: "作用力相同",
         title: "物體碰撞時，小質量會受較大的力嗎？",
         question: "物體碰撞時，質量較小者會受到較大的力，並會以較大的加速度運動。（是非題，若錯誤請訂正）",
@@ -812,7 +812,7 @@
         ]
       },
       {
-        id: "q2",
+        id: "0604-q2",
         nav: "碰撞中守恆",
         title: "彈性碰撞中，總動量與總動能何時守恆？",
         question: "兩物體作彈性碰撞，無論碰撞過程或碰撞前後，總動量與總動能都須守恆。（是非題，若錯誤請訂正）",
@@ -845,7 +845,7 @@
         ]
       },
       {
-        id: "q3",
+        id: "0604-q3",
         nav: "速度圖判讀",
         title: "由 v-t 圖求質心速度與碰撞時間",
         question: "在一直線上的甲、乙兩球發生正面碰撞，而兩球碰撞前到碰撞後的速度 v 隨時間 t 變化之關係如圖所示：\n(1) 系統的質心速度量值為______ m/s。\n(2) 此碰撞是否為彈性碰撞？為什麼？\n(3) 在_______ s 時，兩球最接近。\n(4) 整個碰撞過程費時_______ s。",
@@ -883,7 +883,7 @@
         ]
       },
       {
-        id: "q4",
+        id: "0604-q4",
         nav: "兩球碰撞",
         title: "2 kg 與 3 kg 相向碰撞",
         question: "光滑平面上有甲、乙兩小球，若甲球質量為 2 kg、乙球質量為 3 kg，分別以量值 5 m/s 與 15 m/s 之初速相向而行，令向右為正，回答下列問題：\n(1) 若甲、乙兩球作一維彈性碰撞，則碰撞後：甲球速度量值為______ m/s，方向向_____、乙球速度量值為______ m/s，方向向_____。\n(2) 若甲、乙兩球作一維非彈性碰撞，甲球撞後向左速度為 16 m/s，則乙球撞後速度為何？",
@@ -921,7 +921,7 @@
         ]
       },
       {
-        id: "q5",
+        id: "0604-q5",
         nav: "三物連續碰撞",
         title: "三物體連續一維彈性碰撞",
         question: "圖中一光滑水平面上有三物體，甲、乙的質量均為 m，丙的質量為 3m。開始時，乙和丙均為靜止而甲以等速度 v 向右行進。設該三物體間的碰撞皆為一維彈性碰撞，則在所有碰撞都結束後，各物體運動速度為何？（請寫出量值跟方向）\n甲：\n乙：\n丙：",
@@ -962,7 +962,7 @@
 
     const storageKey = "datong-0604-comments-v1";
     let comments = [];
-    let activeQuestionId = "q1";
+    let activeQuestionId = "0604-q1";
     let showAllQuestions = false;
 
     const nav = document.querySelector("#questionNav");
