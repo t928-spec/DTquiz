@@ -708,16 +708,16 @@
         id: "q1",
         nav: "彈簧位能",
         title: "彈簧壓縮後的位能",
-        question: "一質量為 m 之物體固定在一理想彈簧的右端，靜置在水平面上，彈簧的左端固定。向右拉動物體，使彈簧較原長伸長 x 時，彈簧位能為 Us。放手後物體往左通過平衡點，當彈簧較原長壓縮 x/3 時，彈簧位能為何？",
-        answer: "Us / 9",
+        question: "一質量為 m 之物體固定在一理想彈簧的右端，靜置在水平面上，彈簧的左端固定。向右拉動物體，使彈簧較原長伸長 x 時，彈簧位能為 Uₛ。放手後物體往左通過平衡點，當彈簧較原長壓縮 x/3 時，彈簧位能為何？",
+        answer: "Uₛ / 9",
         concepts: ["彈力位能", "位移平方關係", "伸長與壓縮同樣看 |x|"],
-        pitfalls: ["把 x/3 直接變成 Us/3", "忘記位能公式中位移要平方", "把壓縮方向當成負位能"],
+        pitfalls: ["把 x/3 直接變成 Uₛ/3", "忘記位能公式中位移要平方", "把壓縮方向當成負位能"],
         diagram: "spring",
         steps: [
           {
-            title: "先把 Us 寫成公式",
-            body: "<span class='formula'>Us = <span class='frac'><span>1</span><span>2</span></span> kx<sup>2</sup></span>",
-            detail: "理想彈簧的彈力位能只和彈簧相對原長的變形量有關。這裡 x 是原本被拉長的量，所以題目給的 Us 可以直接當成 <span class='formula'><span class='frac'><span>1</span><span>2</span></span>kx<sup>2</sup></span>。"
+            title: "先把 Uₛ 寫成公式",
+            body: "<span class='formula'>U<sub>s</sub> = <span class='frac'><span>1</span><span>2</span></span> kx<sup>2</sup></span>",
+            detail: "理想彈簧的彈力位能只和彈簧相對原長的變形量有關。這裡 x 是原本被拉長的量，所以題目給的 <span class='formula'>U<sub>s</sub></span> 可以直接當成 <span class='formula'><span class='frac'><span>1</span><span>2</span></span>kx<sup>2</sup></span>。"
           },
           {
             title: "壓縮時仍然用變形量大小",
@@ -725,8 +725,8 @@
             detail: "彈簧被壓縮時若用座標可能是負值，但位能公式裡是平方，所以 <span class='formula'>(-x/3)<sup>2</sup></span> 和 <span class='formula'>(x/3)<sup>2</sup></span> 相同。"
           },
           {
-            title: "代入並和 Us 比較",
-            body: "<span class='formula'>U = <span class='frac'><span>1</span><span>2</span></span>k(<span class='frac'><span>x</span><span>3</span></span>)<sup>2</sup> = <span class='frac'><span>1</span><span>9</span></span>Us</span>",
+            title: "代入並和 Uₛ 比較",
+            body: "<span class='formula'>U = <span class='frac'><span>1</span><span>2</span></span>k(<span class='frac'><span>x</span><span>3</span></span>)<sup>2</sup> = <span class='frac'><span>1</span><span>9</span></span>U<sub>s</sub></span>",
             detail: "只要變形量變成原來的 1/3，位能就變成 <span class='formula'>(1/3)<sup>2</sup> = 1/9</span> 倍。"
           }
         ]
@@ -803,15 +803,15 @@
       {
         id: "q4",
         nav: "重力位能一般式",
-        title: "砲彈改用 v0/3 後的最大高度",
-        question: "欲將一砲彈自地面鉛直向上發射，使其達最大高度、距地面為 R 處，所需初速度為 v0。今若改以 v0/3 的初速鉛直向上發射，則其可達的最大高度為何？R 為地球半徑。",
+        title: "砲彈改用 v₀/3 後的最大高度",
+        question: "欲將一砲彈自地面鉛直向上發射，使其達最大高度、距地面為 R 處，所需初速度為 v₀。今若改以 v₀/3 的初速鉛直向上發射，則其可達的最大高度為何？R 為地球半徑。",
         answer: "距地面 R/17",
         concepts: ["萬有引力位能", "能量守恆", "最大高度速度為 0", "地心距離與離地高度"],
         pitfalls: ["把重力位能寫成 mgh", "把高度 R 誤當地心距離 R", "最後忘記扣掉地球半徑"],
         diagram: "projectile",
         steps: [
           {
-            title: "先用原條件求 v0 的能量意義",
+            title: "先用原條件求 v₀ 的能量意義",
             body: "地面地心距離是 <span class='formula'>R</span>，離地高度 <span class='formula'>R</span> 的最高點地心距離是 <span class='formula'>2R</span>。",
             detail: "萬有引力位能要用地心距離 r，不是離地高度 h。題目說最高點距地面為 R，所以那一點離地心是 <span class='formula'>R + R = 2R</span>。"
           },
@@ -826,7 +826,7 @@
             detail: "這表示原本的初速提供的動能，剛好等於從地心距離 R 到 2R 所需增加的重力位能。"
           },
           {
-            title: "速度改成 v0/3，動能變成 1/9",
+            title: "速度改成 v₀/3，動能變成 1/9",
             body: "<span class='formula'><span class='frac'><span>1</span><span>2</span></span>m(<span class='frac'><span>v<sub>0</sub></span><span>3</span></span>)<sup>2</sup> = <span class='frac'><span>1</span><span>9</span></span> · <span class='frac'><span>GMm</span><span>2R</span></span> = <span class='frac'><span>GMm</span><span>18R</span></span></span>",
             detail: "速率除以 3，動能不是除以 3，而是除以 9。這是本題最容易失分的位置。"
           },
@@ -848,7 +848,7 @@
         title: "非保守力作功與力學能變化",
         question: "一系統中，若有非保守力作功 −10 焦耳，則此系統力學能變化為多少焦耳？",
         answer: "−10 J",
-        concepts: ["非保守力作功", "力學能變化", "ΔE = Wnc"],
+        concepts: ["非保守力作功", "力學能變化", "ΔE = 非保守力作功"],
         pitfalls: ["把作功的負號拿掉", "誤以為力學能守恆", "把系統能量和熱散失方向混在一起"],
         diagram: "work",
         steps: [
@@ -936,7 +936,9 @@
           <polygon points="262,105 242,93 242,117" fill="#1c7b76"/>
           <line x1="74" y1="139" x2="295" y2="139" stroke="#97a39b" stroke-width="3"/>
           <path d="M90 142 C108 158 128 158 146 142 S184 126 204 142" fill="none" stroke="#c95b4a" stroke-width="4"/>
-          <text x="82" y="54" fill="#18202c" font-size="20">Wnc = ΔE</text>
+          <text x="82" y="54" fill="#18202c" font-size="20">W</text>
+          <text x="102" y="59" fill="#18202c" font-size="12">nc</text>
+          <text x="124" y="54" fill="#18202c" font-size="20">= ΔE</text>
         </svg>`
     };
 
