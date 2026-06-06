@@ -92,6 +92,29 @@
       font-size: .9rem;
     }
 
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: .92rem;
+    }
+
+    .home-link:hover,
+    .home-link:focus-visible {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+      outline: none;
+    }
+
     .question-nav {
       display: grid;
       gap: 6px;
@@ -720,6 +743,7 @@
         <strong>0604 物理小考訂正</strong>
         <span>力學二與熱學｜範圍 4-5</span>
       </div>
+      <a class="home-link" href="index.html">← 返回首頁</a>
       <nav id="questionNav" class="question-nav"></nav>
       <div id="syncStatus" class="sync-pill"><span class="dot"></span><span>本機留言</span></div>
       <span class="source-pill">題目：Word 檔｜答案：課堂訂正</span>
@@ -816,15 +840,15 @@
         nav: "碰撞中守恆",
         title: "彈性碰撞中，總動量與總動能何時守恆？",
         question: "兩物體作彈性碰撞，無論碰撞過程或碰撞前後，總動量與總動能都須守恆。（是非題，若錯誤請訂正）",
-        answer: "錯。總動量在碰撞過程與碰撞前後皆守恆；總動能只要求碰撞前後相等，碰撞過程中可能暫存為彈性位能或熱等形式。",
+        answer: "錯。總動量在碰撞過程與碰撞前後皆守恆；總動能只保證碰撞前後相等，碰撞過程中會暫時轉為彈性位能，所以總平移動能會先變小再恢復。",
         concepts: ["彈性碰撞", "動量守恆", "動能守恆的時間點"],
         pitfalls: ["把前後守恆說成每一瞬間都守恆", "忽略碰撞壓縮時可能有彈性位能", "把總能量與總動能混為一談"],
         diagram: "none",
         check: {
-          prompt: "彈性碰撞在碰撞壓縮最劇烈的瞬間，總動能一定等於碰撞前嗎？",
-          options: ["不一定", "一定", "只有同質量時一定"],
+          prompt: "彈性碰撞在碰撞壓縮最劇烈的瞬間，總平移動能會怎麼變化？",
+          options: ["會先變小", "一定等於碰撞前", "會先變大"],
           answer: 0,
-          feedback: "彈性碰撞要求碰撞前後總動能相等；過程中動能可能暫時轉成彈性位能。"
+          feedback: "彈性碰撞要求碰撞前後總動能相等；壓縮過程中部分平移動能暫時轉成彈性位能，所以總平移動能會變小。"
         },
         steps: [
           {
@@ -835,12 +859,12 @@
           {
             title: "彈性碰撞的動能判準",
             body: "彈性碰撞的定義是碰撞前後總動能相同。",
-            detail: "碰撞正在發生時，物體可能變形，部分動能暫存成彈性位能；若題目要求「無論碰撞過程或前後總動能都守恆」，這句太強。"
+            detail: "碰撞正在發生時，物體會被壓縮或變形，部分平移動能暫存成彈性位能；到最大壓縮時，總平移動能最小。之後彈性位能再轉回動能，所以碰撞前後總動能才相等。"
           },
           {
             title: "寫成訂正句",
-            body: "訂正：動量無誤；但碰撞過程中總動能不一定守恆，只需碰撞前後總動能相等。",
-            detail: "照片紅字的重點正是「動量無誤，但碰撞過程中總動能不守恆」，這是這題的得分句。"
+            body: "訂正：動量無誤；但碰撞過程中總平移動能會先變小，只保證碰撞前後總動能相等。",
+            detail: "得分句可以寫成：碰撞中總動量守恆；彈性碰撞的總動能是碰撞前後相等，碰撞過程中會暫時轉為彈性位能。"
           }
         ]
       },

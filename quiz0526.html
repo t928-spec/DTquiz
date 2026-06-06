@@ -92,6 +92,29 @@
       font-size: .9rem;
     }
 
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: .92rem;
+    }
+
+    .home-link:hover,
+    .home-link:focus-visible {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+      outline: none;
+    }
+
     .question-nav {
       display: grid;
       gap: 6px;
@@ -627,6 +650,7 @@
         <strong>0526 物理小考訂正</strong>
         <span>力學二與熱學｜4-2 到 4-4</span>
       </div>
+      <a class="home-link" href="index.html">← 返回首頁</a>
       <nav id="questionNav" class="question-nav"></nav>
       <div id="syncStatus" class="sync-pill"><span class="dot"></span><span>本機留言</span></div>
     </aside>
