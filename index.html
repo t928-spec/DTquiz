@@ -98,6 +98,15 @@
       box-shadow: var(--shadow);
     }
 
+    .hero-image {
+      display: block;
+      width: 100%;
+      height: 188px;
+      padding: 14px;
+      object-fit: contain;
+      background: #fff;
+    }
+
     .hero-panel-text {
       display: grid;
       gap: 2px;
@@ -418,18 +427,10 @@
         <p class="subtitle">每份小考保留自己的互動詳解、易錯提醒與同學提問區。新的小考會接在這裡，根網址固定當作入口頁。</p>
       </div>
       <aside class="hero-panel">
-        <div class="collision-art" aria-label="0604 碰撞守恆簡圖">
-          <div class="collision-board">
-            <span class="ball left">甲</span>
-            <span class="arrow left"></span>
-            <span class="arrow right"></span>
-            <span class="ball right">乙</span>
-            <span class="momentum-label">Σp 前 = Σp 後</span>
-          </div>
-        </div>
+        <img class="hero-image" src="assets/quiz0618-speed-distribution.png" alt="不同溫度的理想氣體分子速率分布曲線">
         <div class="hero-panel-text">
-          <strong>最新：0604 碰撞守恆</strong>
-          <span>範圍 4-5｜兩球與三物體彈性碰撞</span>
+          <strong>最新：0618 理想氣體</strong>
+          <span>範圍 5-1～5-3｜氣體動力論與速率分布</span>
         </div>
       </aside>
     </header>
@@ -438,6 +439,7 @@
       <button class="filter-button active" type="button" data-filter="all">全部</button>
       <button class="filter-button" type="button" data-filter="4-2to4-4">4-2 到 4-4</button>
       <button class="filter-button" type="button" data-filter="4-5">4-5</button>
+      <button class="filter-button" type="button" data-filter="5-1to5-3">5-1 到 5-3</button>
     </nav>
 
     <main id="quizGrid" class="quiz-grid" aria-label="小考詳解列表"></main>
@@ -466,6 +468,16 @@
         topics: ["動量守恆", "彈性碰撞", "質心速度", "速度圖"],
         meta: "5 題｜互動步驟｜小檢核｜留言區",
         visual: "collision"
+      },
+      {
+        date: "0618",
+        range: "5-1to5-3",
+        title: "理想氣體與氣體動力論",
+        description: "均方速率、理想氣體常數、Maxwell 速率分布與絕熱容器的平衡溫度。",
+        href: "quiz0618.html",
+        topics: ["氣體動力論", "理想氣體", "速率分布", "能量守恆"],
+        meta: "5 題｜28 個步驟｜小檢核｜留言區",
+        visual: "distribution"
       }
     ];
 
@@ -481,7 +493,7 @@
       return `
         <a class="quiz-card${isHidden ? " hidden" : ""}" href="${item.href}" data-range="${item.range}">
           <div class="visual">
-            ${item.visual === "collision" ? collisionArt() : formulaArt()}
+            ${item.visual === "collision" ? collisionArt() : item.visual === "distribution" ? "<img src='assets/quiz0618-speed-distribution.png' alt='理想氣體分子速率分布圖'>" : formulaArt()}
           </div>
           <div class="card-body">
             <div class="card-top">

@@ -24,7 +24,8 @@ to anon
 with check (
   question_id in (
     'q1', 'q2', 'q3', 'q4', 'q5',
-    '0604-q1', '0604-q2', '0604-q3', '0604-q4', '0604-q5'
+    '0604-q1', '0604-q2', '0604-q3', '0604-q4', '0604-q5',
+    '0618-q1', '0618-q2', '0618-q3', '0618-q4', '0618-q5'
   )
   and char_length(name) <= 18
   and char_length(message) between 1 and 500
