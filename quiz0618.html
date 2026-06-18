@@ -1039,33 +1039,33 @@
       {
         id: "0618-q1",
         nav: "微觀與巨觀",
-        title: "壓力、溫度與均方速率",
+        title: "壓力、溫度與方均速率",
         question: "請以符號表示氣體微觀物理量與巨觀物理量之間的關係。參考使用：單一分子質量 m、體積 V、波茲曼常數 k、理想氣體常數 R、分子個數 N、莫耳質量 M。\n(1) 壓力 P 與速率平方的平均值 ⟨v²⟩。\n(2) 溫度 T 與速率平方的平均值 ⟨v²⟩。",
         answer: "(1) <span class='formula'>P = Nm<span style='text-decoration:overline'>v²</span>/(3V) = (1/3)ρ<span style='text-decoration:overline'>v²</span></span>；(2) <span class='formula'><span style='text-decoration:overline'>v²</span> = 3kT/m = 3RT/M</span>。",
-        concepts: ["氣體動力論", "均方速率", "質量密度", "微觀與巨觀"],
-        pitfalls: ["把平均速率平方寫成均方速率", "忘記壓力公式的 1/3", "把單一分子質量 m 與莫耳質量 M 混用", "把 N 當成莫耳數 n"],
+        concepts: ["氣體動力論", "方均速率", "質量密度", "微觀與巨觀"],
+        pitfalls: ["把平均速率的平方誤當成方均速率", "忘記壓力公式的 1/3", "把單一分子質量 m 與莫耳質量 M 混用", "把 N 當成莫耳數 n"],
         diagram: "microMacro",
         check: {
-          prompt: "同一種氣體溫度升高為 2 倍時，均方速率 ⟨v²⟩ 變成幾倍？",
+          prompt: "同一種氣體溫度升高為 2 倍時，方均速率 ⟨v²⟩ 變成幾倍？",
           options: ["2 倍", "√2 倍", "4 倍"],
           answer: 0,
-          feedback: "由 ⟨v²⟩ = 3kT/m 可知，在分子質量固定時，均方速率與絕對溫度成正比。"
+          feedback: "由 ⟨v²⟩ = 3kT/m 可知，在分子質量固定時，方均速率與絕對溫度成正比。"
         },
         steps: [
           {
-            title: "先辨認均方速率",
+            title: "先辨認方均速率",
             body: "題目的 <span class='formula'><span style='text-decoration:overline'>v²</span></span> 是先平方、再對所有分子取平均。",
-            detail: "它不是平均速率的平方。一般而言 <span class='formula'><span style='text-decoration:overline'>v²</span> ≠ ⟨v⟩²</span>；氣體動力論使用的是均方速率。"
+            detail: "方均速率是先將每個分子的速率平方，再取平均。它不是平均速率的平方；一般而言 <span class='formula'><span style='text-decoration:overline'>v²</span> ≠ ⟨v⟩²</span>。"
           },
           {
             title: "從碰壁動量變化得到壓力",
             body: "<span class='formula'>P = Nm<span style='text-decoration:overline'>v²</span>/(3V)</span>。",
-            detail: "分子在三維空間隨機運動，平均而言三個方向對均方速率的貢獻相同，因此 <span class='formula'><span style='text-decoration:overline'>v<sub>x</sub>²</span> = (1/3)<span style='text-decoration:overline'>v²</span></span>，這就是 1/3 的來源。"
+            detail: "分子在三維空間隨機運動，平均而言三個方向對方均速率的貢獻相同，因此 <span class='formula'><span style='text-decoration:overline'>v<sub>x</sub>²</span> = (1/3)<span style='text-decoration:overline'>v²</span></span>，這就是 1/3 的來源。"
           },
           {
             title: "改寫成密度形式",
             body: "因為總質量為 <span class='formula'>Nm</span>、密度 <span class='formula'>ρ = Nm/V</span>，所以 <span class='formula'>P = (1/3)ρ<span style='text-decoration:overline'>v²</span></span>。",
-            detail: "這個形式最容易看出：其他條件不變時，壓力與均方速率成正比。"
+            detail: "這個形式最容易看出：其他條件不變時，壓力與方均速率成正比。"
           },
           {
             title: "連接理想氣體方程式",
@@ -1073,7 +1073,7 @@
             detail: "兩式都描述同一團理想氣體，所以 <span class='formula'>NkT = (1/3)Nm<span style='text-decoration:overline'>v²</span></span>。"
           },
           {
-            title: "解出均方速率",
+            title: "解出方均速率",
             body: "<span class='formula'><span style='text-decoration:overline'>v²</span> = 3kT/m</span>；又因 <span class='formula'>R = N<sub>A</sub>k、M = N<sub>A</sub>m</span>，也可寫成 <span class='formula'>3RT/M</span>。",
             detail: "使用 k 時要配單一分子質量 m；使用 R 時要配莫耳質量 M。兩式物理意義相同。"
           }
@@ -1146,7 +1146,7 @@
           {
             title: "判斷 B：1/3 是平方分量",
             body: "(B) 錯。正確關係是 <span class='formula'><span style='text-decoration:overline'>v<sub>x</sub>²</span> = (1/3)<span style='text-decoration:overline'>v²</span></span>。",
-            detail: "分子方向是連續且隨機的，幾乎不會剛好沿 x 軸。1/3 表示三個方向對均方速率的平均貢獻相同，不是把分子分成三群。"
+            detail: "分子方向是連續且隨機的，幾乎不會剛好沿 x 軸。1/3 表示三個方向對方均速率的平均貢獻相同，不是把分子分成三群。"
           },
           {
             title: "判斷 C：平均不等於每一個",
@@ -1156,7 +1156,7 @@
           {
             title: "判斷 D：由壓力公式",
             body: "(D) 對。<span class='formula'>P = (1/3)ρ<span style='text-decoration:overline'>v²</span></span>。",
-            detail: "其他條件不變包含氣體質量、分子數與體積不變，因此密度 ρ 固定，P 就與均方速率成正比。"
+            detail: "其他條件不變包含氣體質量、分子數與體積不變，因此密度 ρ 固定，P 就與方均速率成正比。"
           },
           {
             title: "判斷 E：熱平衡代表同溫",
