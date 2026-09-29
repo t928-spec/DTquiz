@@ -14,6 +14,8 @@ for (const id of ["0923-q1", "0923-q2", "0923-q3", "0923-q4", "0923-q5"]) {
 
 assert.match(page, /位移為零/);
 assert.match(page, /兩側.*指向.*密部/);
+assert.match(page, /不是因為.*位移為零.*自動/);
+assert.match(page, /位移曲線在零位移處的斜率量值最大/);
 assert.match(page, /壓力的平衡線.*1 atm/);
 assert.match(page, /疏部.*小於.*1 atm/);
 assert.match(page, /簡諧運動/);
