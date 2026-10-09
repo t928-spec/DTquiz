@@ -702,6 +702,15 @@
       resize: vertical;
     }
 
+    .comment-status {
+      min-height: 1.45em;
+      margin: 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .comment-status.error { color: var(--red); }
+
     .empty {
       margin: 0;
       color: var(--muted);
@@ -1567,6 +1576,7 @@
               <textarea name="message" maxlength="500" placeholder="哪一步卡住？也可以寫自己的訂正句。"></textarea>
               <button class="comment-button" type="submit">送出</button>
             </form>
+            <p class="comment-status" data-comment-status="${item.id}" aria-live="polite"></p>
           </section>
         </article>
       `;
@@ -1643,11 +1653,23 @@
             created_at: new Date().toISOString()
           };
           if (!payload.message) return;
-          await addComment(payload);
+          const shared = await addComment(payload);
+          if (!shared) {
+            setCommentStatus(questionId, "雲端留言暫時未送出，內容已保留在輸入框中，請稍後再試。", true);
+            return;
+          }
           form.reset();
+          setCommentStatus(questionId, "已送至共享留言區。", false);
           renderComments(questionId);
         });
       });
+    }
+
+    function setCommentStatus(questionId, message, isError) {
+      const status = document.querySelector(`[data-comment-status="${questionId}"]`);
+      if (!status) return;
+      status.textContent = message;
+      status.classList.toggle("error", Boolean(isError));
     }
 
     function bindQuestionNav() {
@@ -1698,29 +1720,32 @@
     }
 
     async function addComment(payload) {
-      if (hasSupabase) {
-        try {
-          const response = await fetch(`${COMMENT_BACKEND.supabaseUrl}/rest/v1/${COMMENT_BACKEND.table}`, {
-            method: "POST",
-            headers: {
-              apikey: COMMENT_BACKEND.supabaseAnonKey,
-              Authorization: `Bearer ${COMMENT_BACKEND.supabaseAnonKey}`,
-              "Content-Type": "application/json",
-              Prefer: "return=representation"
-            },
-            body: JSON.stringify(payload)
-          });
-          if (!response.ok) throw new Error("comment insert failed");
-          const inserted = await response.json();
-          comments.push(inserted[0] || payload);
-          return;
-        } catch (error) {
-          console.warn(error);
-        }
+      if (!hasSupabase) {
+        updateSync("send-failed");
+        return false;
       }
 
-      comments.push({ ...payload, id: crypto.randomUUID() });
-      localStorage.setItem(storageKey, JSON.stringify(comments));
+      try {
+        const response = await fetch(`${COMMENT_BACKEND.supabaseUrl}/rest/v1/${COMMENT_BACKEND.table}`, {
+          method: "POST",
+          headers: {
+            apikey: COMMENT_BACKEND.supabaseAnonKey,
+            Authorization: `Bearer ${COMMENT_BACKEND.supabaseAnonKey}`,
+            "Content-Type": "application/json",
+            Prefer: "return=representation"
+          },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error("comment insert failed");
+        const inserted = await response.json();
+        comments.push(inserted[0] || payload);
+        updateSync(true);
+        return true;
+      } catch (error) {
+        console.warn(error);
+        updateSync("send-failed");
+        return false;
+      }
     }
 
     function renderAllComments() {
@@ -1755,10 +1780,16 @@
       });
     }
 
-    function updateSync(online) {
+    function updateSync(state) {
+      const online = state === true;
+      const sendFailed = state === "send-failed";
       const dot = syncStatus.querySelector(".dot");
       dot.classList.toggle("online", online);
-      syncStatus.querySelector("span:last-child").textContent = online ? "共享留言" : "本機留言";
+      syncStatus.querySelector("span:last-child").textContent = online
+        ? "共享留言"
+        : sendFailed
+          ? "共享留言暫時無法送出"
+          : "本機留言";
     }
 
     function formatDate(value) {

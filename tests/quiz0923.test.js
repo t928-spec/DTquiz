@@ -36,6 +36,8 @@ assert.match(page, /m = 0, 1, 2/);
 assert.match(page, /3 次/);
 assert.match(page, /7 次/);
 assert.match(page, /datong-0923-comments-v1/);
+assert.match(page, /雲端留言暫時未送出/);
+assert.match(page, /共享留言暫時無法送出/);
 assert.match(page, /href="index\.html"/);
 assert.match(index, /quiz0923\.html/);
 assert.match(index, /1-1 到 2-2/);
