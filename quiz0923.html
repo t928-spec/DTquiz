@@ -1362,7 +1362,7 @@
         question: "有一長度為 1 m、兩端開口的空心玻璃管，敲響一支頻率為 680 Hz 的音叉接近管口，結果產生共鳴。此頻率為玻璃管的第幾諧音？（設聲速為 340 m/s）",
         answer: "此頻率為<strong>第 4 諧音</strong>。",
         concepts: ["聲速公式", "兩端開口管", "駐波", "諧音", "開管頻率通式"],
-        pitfalls: ["忘記先由 v = fλ 求波長", "把兩端開口管誤當成一端封閉管", "把諧音序號 n 與節點數混在一起"],
+        pitfalls: ["忘記先由 v = fλ 求波長", "把兩端開口管誤當成一端封閉管", "把諧音序號 n 與節點數混在一起", "把諧音與基音、泛音的命名混用：基音是第一諧音；第 4 諧音是第三泛音"],
         diagram: "openPipe",
         check: {
           prompt: "兩端開口管長度 L 的第 n 諧音，滿足哪一式？",
@@ -1394,7 +1394,7 @@
           {
             title: "寫出諧音序號",
             body: "所以 680 Hz 對應<strong>第 4 諧音</strong>。",
-            detail: "基本頻率 <span class='formula'>f<sub>1</sub> = v/(2L) = 170 Hz</span>；<span class='formula'>680 = 4 × 170</span> 也再次確認這是第 4 諧音。"
+            detail: "基本頻率 <span class='formula'>f<sub>1</sub> = v/(2L) = 170 Hz</span>；<span class='formula'>680 = 4 × 170</span> 也再次確認這是第 4 諧音。命名上，基音就是第一諧音；第 4 諧音是第三泛音，因為泛音從第二諧音開始數。"
           }
         ]
       },
