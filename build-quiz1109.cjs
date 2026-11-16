@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 let page = fs.readFileSync('quiz0923.html', 'utf8');
-page = page.replace('<script>\n    const COMMENT_BACKEND', '<script src="quiz1109-data.js?v=20261116-2"></script>\n  <script>\n    const COMMENT_BACKEND');
+page = page.replace('<script>\n    const COMMENT_BACKEND', '<script src="quiz1109-data.js?v=20261116-3"></script>\n  <script>\n    const COMMENT_BACKEND');
 page = page.replace(/    const quiz = \[[\s\S]*?\n    \];\n\n    const storageKey/, '    const quiz = quiz1109;\n\n    const storageKey');
 page = page.replaceAll('0923 物理小考訂正', '1109 物理小考訂正').replace('波動、光與聲音｜範圍 1-1～2-2', '波動、光與聲音｜範圍 3-1～3-4').replace('datong-0923-comments-v1', 'datong-1109-comments-v1').replace('let activeQuestionId = "0923-q1"', 'let activeQuestionId = "1109-q1"');
 page = page.replace(/<p class="subtitle">[\s\S]*?<\/p>/, '<p class="subtitle">光的折射、全反射與薄透鏡成像。</p>');
